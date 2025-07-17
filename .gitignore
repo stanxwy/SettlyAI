@@ -416,3 +416,40 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+
+# === Additional Ignores for React / Node.js / Cross-platform ===
+
+# Node.js / React frontend build files
+node_modules/
+dist/
+build/
+.vite/
+.next/
+out/
+coverage/
+*.log
+
+# Environment config
+.env
+.env.*.local
+
+# Mac 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+.history/
+
+# Others
+*.local
+
