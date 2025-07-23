@@ -1,46 +1,68 @@
-import js from "@eslint/js";
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
-import { defineConfig } from "eslint/config";
-import tanstackQuery from "@tanstack/eslint-plugin-query";
-import testingLibrary from "eslint-plugin-testing-library";
-import pluginJestDom from "eslint-plugin-jest-dom";
+import js from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import pluginReact from 'eslint-plugin-react';
+import { defineConfig } from 'eslint/config';
+import tanstackQuery from '@tanstack/eslint-plugin-query';
+import testingLibrary from 'eslint-plugin-testing-library';
+import pluginJestDom from 'eslint-plugin-jest-dom';
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     plugins: { js },
-    extends: ["js/recommended"],
+    extends: ['js/recommended'],
   },
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     languageOptions: { globals: globals.browser },
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
-    files: ["**/*.{jsx,tsx}"],
+    files: ['**/*.{jsx,tsx}'],
     rules: {
-      "react/react-in-jsx-scope": "off",
+      'react/react-in-jsx-scope': 'off',
+      'react/function-component-definition': [
+        'error',
+        {
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
+      '@typescript-eslint/ban-types': [
+        'error',
+        {
+          types: {
+            FC: {
+              message: '使用普通函数类型而不是React.FC',
+              fixWith: '({ children }: { children?: React.ReactNode })',
+            },
+            FunctionComponent: {
+              message: '使用普通函数类型而不是React.FunctionComponent',
+              fixWith: '({ children }: { children?: React.ReactNode })',
+            },
+          },
+        },
+      ],
     },
   },
   // TanStack Query plugin configuration
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
-      "@tanstack/query": tanstackQuery,
+      '@tanstack/query': tanstackQuery,
     },
-    extends: tanstackQuery.configs["flat/recommended"],
+    extends: tanstackQuery.configs['flat/recommended'],
   },
   // Testing Library plugin configuration
   {
-    files: ["**/*.{test,spec}.{js,jsx,ts,tsx}"],
-    ...testingLibrary.configs["flat/react"],
+    files: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
+    ...testingLibrary.configs['flat/react'],
   },
   // Jest DOM plugin configuration
   {
-    files: ["**/*.{test,spec}.{js,jsx,ts,tsx}"],
-    ...pluginJestDom.configs["flat/recommended"],
+    files: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
+    ...pluginJestDom.configs['flat/recommended'],
   },
 ]);
