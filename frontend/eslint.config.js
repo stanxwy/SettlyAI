@@ -19,7 +19,15 @@ export default defineConfig([
     languageOptions: { globals: globals.browser },
   },
   tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  {
+    files: ['**/*.{jsx,tsx}'],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    ...pluginReact.configs.flat.recommended,
+  },
   {
     files: ['**/*.{jsx,tsx}'],
     rules: {
@@ -29,21 +37,6 @@ export default defineConfig([
         {
           namedComponents: 'arrow-function',
           unnamedComponents: 'arrow-function',
-        },
-      ],
-      '@typescript-eslint/ban-types': [
-        'error',
-        {
-          types: {
-            FC: {
-              message: '使用普通函数类型而不是React.FC',
-              fixWith: '({ children }: { children?: React.ReactNode })',
-            },
-            FunctionComponent: {
-              message: '使用普通函数类型而不是React.FunctionComponent',
-              fixWith: '({ children }: { children?: React.ReactNode })',
-            },
-          },
         },
       ],
     },

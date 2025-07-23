@@ -1,69 +1,114 @@
-# React + TypeScript + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application that combines feature-based and page-based architecture to provide a high-performance, maintainable user interface.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Core Framework**: React 19
+- **State Management**: Redux Toolkit
+- **Routing**: React Router 7
+- **UI Components**: Material UI 7
+- **Data Fetching**: TanStack Query (React Query) 5
+- **Form Handling**: React Hook Form 7
+- **Type System**: TypeScript
+- **Build Tool**: Vite
+- **Testing**: Vitest + Testing Library
+- **Data Validation**: Zod
+- **Code Quality**: ESLint + Prettier
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The project uses a hybrid of feature-based and page-based architecture:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```
+src/
+├── assets/         # Static assets (images, fonts, etc.)
+├── components/     # Shared components
+├── features/       # Feature modules (organized by business function)
+│   ├── auth/       # Authentication functionality
+│   └── dashboard/  # Dashboard functionality
+├── hooks/          # Custom React hooks
+├── layouts/        # Layout components
+├── pages/          # Page components (directly correspond to routes)
+├── redux/          # Redux configuration
+├── utils/          # Utility functions
+├── App.tsx         # Root application component
+└── main.tsx        # Application entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Feature-Based & Page-Based Combination
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+- **pages/**: Handles route configuration and page entry points, with each page corresponding to a route
+- **features/**: Organizes code by business functionality, each feature being a self-contained module
+  - Can include components, hooks, state, APIs, etc.
+  - High cohesion, independently maintainable
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+This structure balances intuitive page navigation with functional module cohesion, facilitating team collaboration and code maintenance.
+
+## Development Guide
+
+### Requirements
+
+- Node.js ≥ 22.0.0
+- npm ≥ 10.0.0
+
+### Common Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build production version
+npm run build
+
+# Run code linting
+npm run lint
+
+# Format code
+npm run format
+
+# Run tests
+npm run test
 ```
+
+## Coding Standards
+
+The project uses ESLint and Prettier to ensure code quality and consistency:
+
+- React components use arrow function style
+- TypeScript for strong typing
+- Functional programming principles
+- Avoid using React.FC type
+
+## State Management
+
+Redux Toolkit is used for global state management with the following structure:
+
+```
+redux/
+├── store.ts          # Store configuration
+├── slices/           # Redux slices
+└── hooks.ts          # Type-safe hooks
+```
+
+## Performance Optimization
+
+- Route code splitting
+- React.memo optimization
+- useMemo and useCallback caching
+- Virtualized lists for large data sets
+
+## Testing Strategy
+
+Using Vitest and Testing Library for component testing, focusing on functionality rather than implementation details.
+
+## Deployment
+
+The project configuration supports multiple deployment environments:
+
+- Development: Local development server
+- Testing: CI integration tests
+- Production: Optimized static assets

@@ -1,11 +1,12 @@
+import { Route, Routes } from 'react-router';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
-    <>
-      <div>page</div>
-    </>
+    <Routes>
+      <Route path="/" element={<div>page</div>} />
+    </Routes>
   );
-}
+};
 
 export default App;
