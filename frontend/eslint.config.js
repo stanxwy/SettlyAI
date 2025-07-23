@@ -6,6 +6,7 @@ import { defineConfig } from 'eslint/config';
 import tanstackQuery from '@tanstack/eslint-plugin-query';
 import testingLibrary from 'eslint-plugin-testing-library';
 import pluginJestDom from 'eslint-plugin-jest-dom';
+import prettierConfig from 'eslint-config-prettier';
 
 export default defineConfig([
   {
@@ -65,4 +66,5 @@ export default defineConfig([
     files: ['**/*.{test,spec}.{js,jsx,ts,tsx}'],
     ...pluginJestDom.configs['flat/recommended'],
   },
+  prettierConfig,
 ]);
