@@ -56,22 +56,22 @@ This structure balances intuitive page navigation with functional module cohesio
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm run dev
 
 # Build production version
-npm run build
+pnpm run build
 
 # Run code linting
-npm run lint
+pnpm run lint
 
 # Format code
-npm run format
+pnpm run format
 
 # Run tests
-npm run test
+pnpm run test
 ```
 
 ## Coding Standards
