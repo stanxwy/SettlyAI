@@ -1,17 +1,11 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import { CssBaseline, Box } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
 
-const App: React.FC = () => {
+const App = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <CssBaseline />
-      <Navbar />
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        <Outlet />
-      </Box>
-    </Box>
+    <Routes>
+      <Route path="/" element={<div>page</div>} />
+    </Routes>
   );
 };
 
