@@ -2,15 +2,16 @@
 
 public class Suburb
 {
-   
     public int Id { get; set; }
-    public string Name { get; set; } = null;
-    public string State { get; set; }
-    public string PostCode { get; set; }
-    public string Population { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    
-    // 一对多关系：一个 Suburb 有很多 Report
-    public ICollection<SuburbReport> Reports { get; set; } = new List<SuburbReport>();
+    public string Name { get; set; } = null!;
+    public string State { get; set; } = null!;
+    public string Postcode { get; set; } = null!;
+
+    public ICollection<Property> Properties { get; set; } = new List<Property>();
+    public ICollection<HousingMarket> HousingMarkets { get; set; } = new List<HousingMarket>();
+    public ICollection<Livability> Livabilities { get; set; } = new List<Livability>();
+    public ICollection<PopulationSupply> PopulationSupplies { get; set; } = new List<PopulationSupply>();
+    public ICollection<IncomeEmployment> IncomeEmployments { get; set; } = new List<IncomeEmployment>();
+    public ICollection<SettlyAIScore> SettlyAIScores { get; set; } = new List<SettlyAIScore>();
+    public ICollection<RiskDevelopment> RiskDevelopments { get; set; } = new List<RiskDevelopment>();
 }
