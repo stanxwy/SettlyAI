@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SettlyModels.Entities;
 
 namespace SettlyModels;
 
@@ -16,13 +17,13 @@ public class SettlyDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Suburb>(b =>
         {
-            b.ToTable("Teachers");
+            b.ToTable("Suburbs");
             b.HasKey(x => x.Id);
         });
-
+    
         modelBuilder.Entity<SuburbReport>(b =>
         {
-            b.ToTable("Users");
+            b.ToTable("SuburbReport");
             b.HasKey(x => x.Id);
         });
     }
