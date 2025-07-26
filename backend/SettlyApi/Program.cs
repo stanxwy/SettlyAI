@@ -8,7 +8,6 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        //var connectionString = builder.Configuration["ApiConfigs:DBConnection"];
         var apiConfigs = builder.Configuration.GetSection("ApiConfigs").Get<ApiConfigs>();
         builder.Services.AddDbContext<SettlyDbContext>(
             options => options
