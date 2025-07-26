@@ -51,3 +51,4 @@ appsettings.local.json
 
 #Claude
 /CLAUDE.md
+.claude/
