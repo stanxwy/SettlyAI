@@ -34,17 +34,5 @@ public class SettlyDbContext : DbContext
 
     public DbSet<PolicyRule> PolicyRules { get; set; } = null!;
 
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //     base.OnModelCreating(modelBuilder);
-    //      modelBuilder.Entity<SuperProjectionResult>()
-    //         .HasOne(r => r.Input)
-    //         .WithOne(i => i.Result)
-    //         .HasForeignKey<SuperProjectionResult>(r => r.InputId);
-    //
-    //     modelBuilder.Entity<SuperProjectionInsight>()
-    //         .HasOne(r => r.Input)
-    //         .WithOne(i => i.Insight)
-    //         .HasForeignKey<SuperProjectionInsight>(r => r.InputId);
-    // }
+
 }
