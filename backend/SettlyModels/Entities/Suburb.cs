@@ -1,4 +1,4 @@
-﻿namespace SettlyModels.Entities;
+namespace SettlyModels.Entities;
 
 public class Suburb
 {

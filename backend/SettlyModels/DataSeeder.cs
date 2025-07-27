@@ -7,22 +7,22 @@ namespace SettlyModels;
 public class DataSeeder
 {
     private readonly SettlyDbContext _context;
-    
+
     public DataSeeder(SettlyDbContext context)
     {
         _context = context;
     }
-    
+
     public async Task SeedAllAsync()
     {
         // Clear existing data
         await ClearAllDataAsync();
-        
+
         // Generate data in dependency order
         await SeedIndependentEntitiesAsync();
         await SeedFirstLevelDependentEntitiesAsync();
         await SeedSecondLevelDependentEntitiesAsync();
-        
+
         Console.WriteLine("Fake data generation completed!");
     }
 
@@ -31,17 +31,17 @@ public class DataSeeder
         Console.WriteLine("Seeding Users...");
         await SeedUsersAsync();
         await _context.SaveChangesAsync();
-        
+
         Console.WriteLine("Seeding Suburbs...");
         await SeedSuburbsAsync();
         await _context.SaveChangesAsync();
-        
+
         Console.WriteLine("Seeding SuperFunds...");
         await SeedSuperFundsAsync();
         await _context.SaveChangesAsync();
-        
+
         // await SeedPolicyRulesAsync(); // Temporarily disabled
-        
+
         Console.WriteLine("Independent entities seeded");
     }
 
@@ -56,7 +56,7 @@ public class DataSeeder
         await SeedSettlyAIScoresAsync();
         await SeedSuperProjectionInputsAsync();
         await SeedChatLogsAsync();
-        
+
         await _context.SaveChangesAsync();
         Console.WriteLine("First level dependent entities seeded");
     }
@@ -69,7 +69,7 @@ public class DataSeeder
         await SeedSuperProjectionResultsAsync();
         await SeedSuperProjectionInsightsAsync();
         await SeedUserFundSelectionsAsync();
-        
+
         await _context.SaveChangesAsync();
         Console.WriteLine("Second level dependent entities seeded");
     }
@@ -83,7 +83,7 @@ public class DataSeeder
         _context.LoanCalculations.RemoveRange(_context.LoanCalculations);
         _context.InspectionPlans.RemoveRange(_context.InspectionPlans);
         _context.Favourites.RemoveRange(_context.Favourites);
-        
+
         _context.ChatLogs.RemoveRange(_context.ChatLogs);
         _context.SuperProjectionInputs.RemoveRange(_context.SuperProjectionInputs);
         _context.SettlyAIScores.RemoveRange(_context.SettlyAIScores);
@@ -93,12 +93,12 @@ public class DataSeeder
         _context.IncomeEmployments.RemoveRange(_context.IncomeEmployments);
         _context.HousingMarkets.RemoveRange(_context.HousingMarkets);
         _context.Properties.RemoveRange(_context.Properties);
-        
+
         _context.PolicyRules.RemoveRange(_context.PolicyRules);
         _context.SuperFunds.RemoveRange(_context.SuperFunds);
         _context.Suburbs.RemoveRange(_context.Suburbs);
         _context.Users.RemoveRange(_context.Users);
-        
+
         await _context.SaveChangesAsync();
         Console.WriteLine("Existing data cleared");
     }
@@ -407,7 +407,7 @@ public class DataSeeder
         {
             var favouriteCount = new Faker().Random.Int(0, 8);
             var selectedProperties = new Faker().PickRandom(propertyIds, favouriteCount).ToList();
-            
+
             foreach (var propertyId in selectedProperties)
             {
                 favourites.Add(new Favourite
@@ -442,7 +442,7 @@ public class DataSeeder
         {
             var inspectionCount = new Faker().Random.Int(1, 4);
             var selectedProperties = new Faker().PickRandom(propertyIds, inspectionCount).ToList();
-            
+
             foreach (var propertyId in selectedProperties)
             {
                 inspectionPlans.Add(new InspectionPlan
@@ -470,7 +470,7 @@ public class DataSeeder
         {
             var calculationCount = new Faker().Random.Int(1, 3);
             var selectedProperties = new Faker().PickRandom(propertyIds, calculationCount).ToList();
-            
+
             foreach (var propertyId in selectedProperties)
             {
                 var faker = new Faker();
@@ -524,7 +524,7 @@ public class DataSeeder
             var faker = new Faker();
             var projectedBalance = faker.Random.Int(500000, 2000000);
             var fhssAmount = faker.Random.Int(30000, 50000);
-            
+
             superProjectionResults.Add(new SuperProjectionResult
             {
                 InputId = inputId,
@@ -565,7 +565,7 @@ public class DataSeeder
         {
             var faker = new Faker();
             var yearsToRetirement = faker.Random.Int(10, 40);
-            
+
             superProjectionInsights.Add(new SuperProjectionInsight
             {
                 InputId = inputId,
@@ -589,7 +589,7 @@ public class DataSeeder
             var faker = new Faker();
             var userId = faker.PickRandom(userIds);
             var fundId = faker.PickRandom(fundIds);
-            
+
             userFundSelections.Add(new UserFundSelection
             {
                 UserId = userId,

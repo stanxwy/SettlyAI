@@ -12,7 +12,7 @@ public class Program
     {
         // Parse command line arguments
         var dbOptions = DatabaseOptions.Parse(args);
-        
+
         // Show help and exit if requested
         if (dbOptions.Help)
         {
@@ -39,7 +39,7 @@ public class Program
             // Build services
             var services = new ServiceCollection();
             var apiConfigs = configuration.GetSection("ApiConfigs").Get<ApiConfigs>();
-            
+
             if (apiConfigs?.DBConnection == null)
             {
                 Console.WriteLine("ERROR: Database connection string not found in configuration.");
@@ -52,7 +52,7 @@ public class Program
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors()
             );
-            
+
             services.AddScoped<DataSeeder>();
 
             var serviceProvider = services.BuildServiceProvider();
@@ -60,9 +60,9 @@ public class Program
             // Execute database operations
             using var scope = serviceProvider.CreateScope();
             var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
-            
+
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
-            
+
             // Execute seeding operations if requested
             if (dbOptions.Seed)
             {
@@ -77,7 +77,7 @@ public class Program
                     Console.WriteLine("ERROR: --reset-seed is only available in Development environment!");
                     return 1;
                 }
-                
+
                 Console.WriteLine("WARNING: This will clear all existing data and generate new fake data.");
                 Console.WriteLine("Resetting database and generating new fake data...");
                 await seeder.SeedAllAsync();

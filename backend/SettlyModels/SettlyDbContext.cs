@@ -7,9 +7,9 @@ public class SettlyDbContext : DbContext
 {
     public SettlyDbContext(DbContextOptions<SettlyDbContext> options) : base(options)
     {
-        
+
     }
-    
+
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Favourite> Favourites { get; set; } = null!;
     public DbSet<InspectionPlan> InspectionPlans { get; set; } = null!;

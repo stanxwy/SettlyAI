@@ -9,7 +9,7 @@ public class DatabaseOptions
     public static DatabaseOptions Parse(string[] args)
     {
         var options = new DatabaseOptions();
-        
+
         foreach (var arg in args)
         {
             switch (arg.ToLowerInvariant())
@@ -26,7 +26,7 @@ public class DatabaseOptions
                     break;
             }
         }
-        
+
         return options;
     }
 

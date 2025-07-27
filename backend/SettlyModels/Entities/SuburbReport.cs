@@ -4,7 +4,7 @@ public class SuburbReport
 {
     public int Id { get; set; }
     public int SuburbId { get; set; }
-   
+
     #region IncomeAndEmployment
     public string MedianIncome { get; set; }
     public string MedianExpenses { get; set; }
@@ -12,7 +12,7 @@ public class SuburbReport
     public float WhiteCollarRatio { get; set; }
     public float JobGrowth { get; set; }
     #endregion
-   
+
     #region PropertyMarketInsights
     public string MedianPrice { get; set; }
     public string RentalYield { get; set; }
@@ -33,7 +33,7 @@ public class SuburbReport
     public int BuildingApprovalsTimeFrame { get; set; }
     public int DevelopmentProjects { get; set; }
     #endregion
-   
+
     #region LifestyleAndAccessibility
     public decimal SupermarketDistance { get; set; }
     public decimal HospitalDistance { get; set; }
@@ -42,16 +42,16 @@ public class SuburbReport
     public decimal SecondarySchoolScore { get; set; }
     public decimal HospitalDensity { get; set; }
     #endregion
-   
+
     #region SafetyAndScores
     public float CrimeRate { get; set; }
     public decimal AffordabilityScore { get; set; }
     public decimal GrowthPotential { get; set; }
     #endregion
-   
+
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-   
+
     // Navigation property
     public Suburb Suburb { get; set; }
 }
