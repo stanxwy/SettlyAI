@@ -1,8 +1,9 @@
 using Bogus;
 using Microsoft.EntityFrameworkCore;
+using SettlyModels;
 using SettlyModels.Entities;
 
-namespace SettlyModels;
+namespace SettlyDbManager;
 
 public class DataSeeder
 {
