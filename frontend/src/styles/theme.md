@@ -69,26 +69,22 @@ theme.palette.divider; // #E5E7EB
 ### 标题样式
 
 ```typescript
-// 字体家族: 'Poppins, Arial, sans-serif'
-
-theme.typography.h1; // 5.9rem (94px), 500粗细
-theme.typography.h2; // 3.9rem (62px), 500粗细
-theme.typography.h3; // 3rem (48px), 500粗细
-theme.typography.h4; // 2.125rem (34px), 500粗细
-theme.typography.h5; // 1.5rem (24px), 500粗细
-theme.typography.h6; // 1.25rem (20px), 500粗细
+// 根据设计规格的标题样式
+theme.typography.h1; // 48px, 700 字重, 48px 行高
+theme.typography.h2; // 48px, 400 字重, 60px 行高
+theme.typography.h3; // 36px, 400 字重, 40px 行高
+theme.typography.h4; // 24px, 700 字重, 30.46px 行高
+theme.typography.h5; // 20px, 600 字重, 28px 行高
 ```
 
 ### 正文样式
 
 ```typescript
-theme.typography.subtitle1; // 1.1rem (17.6px), 400粗细
-theme.typography.subtitle2; // 0.875rem (14px), 500粗细
-theme.typography.body1; // 1.1rem (17.6px), 400粗细
-theme.typography.body2; // 0.9rem (14.4px), 400粗细
-theme.typography.caption; // 0.75rem (12px), 400粗细
-theme.typography.overline; // 0.75rem (12px), 400粗细, 大写
-theme.typography.button; // 1rem (16px), 500粗细, 无文本转换
+// 根据设计规格的文本样式
+theme.typography.subtitle1; // 18px, 400 字重, 27.57px 行高
+theme.typography.subtitle2; // 16px, 400 字重, 22px 行高
+theme.typography.body1; // 14px, 400 字重, 20px 行高
+theme.typography.body2; // 12px, 400 字重, 13.54px 行高
 ```
 
 ## 📏 间距系统 (Spacing)

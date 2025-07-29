@@ -25,97 +25,59 @@ const borderRadius = 4;
 // Font variables
 const fontFamily = 'Poppins, Arial, sans-serif';
 
+// Typography based on design specs
 const typographyH1 = {
-  fontSize: '5.9rem', // ~94px
-  fontWeight: 500,
-  lineHeight: 1.2,
-  letterSpacing: '-0.01562em',
+  fontSize: '48px',
+  fontWeight: 700,
+  lineHeight: '48px',
 };
 
 const typographyH2 = {
-  fontSize: '3.9rem', // ~62px
-  fontWeight: 500,
-  lineHeight: 1.2,
-  letterSpacing: '-0.00833em',
+  fontSize: '48px',
+  fontWeight: 400,
+  lineHeight: '60px',
 };
 
 const typographyH3 = {
-  fontSize: '3rem', // 48px
-  fontWeight: 500,
-  lineHeight: 1.167,
-  letterSpacing: '0em',
+  fontSize: '36px',
+  fontWeight: 400,
+  lineHeight: '40px',
 };
 
 const typographyH4 = {
-  fontSize: '2.125rem', // 34px
-  fontWeight: 500,
-  lineHeight: 1.235,
-  letterSpacing: '0.00735em',
+  fontSize: '24px',
+  fontWeight: 700,
+  lineHeight: '30.46px',
 };
 
 const typographyH5 = {
-  fontSize: '1.5rem', // 24px
-  fontWeight: 500,
-  lineHeight: 1.334,
-  letterSpacing: '0em',
-};
-
-const typographyH6 = {
-  fontSize: '1.25rem', // 20px
-  fontWeight: 500,
-  lineHeight: 1.6,
-  letterSpacing: '0.0075em',
+  fontSize: '20px',
+  fontWeight: 600,
+  lineHeight: '28px',
 };
 
 const typographySubtitle1 = {
-  fontSize: '1.1rem', // ~17.6px
+  fontSize: '18px',
   fontWeight: 400,
-  lineHeight: 1.75,
-  letterSpacing: '0.00938em',
+  lineHeight: '27.57px',
 };
 
 const typographySubtitle2 = {
-  fontSize: '0.875rem', // 14px
-  fontWeight: 500,
-  lineHeight: 1.57,
-  letterSpacing: '0.00714em',
+  fontSize: '16px',
+  fontWeight: 400,
+  lineHeight: '22px',
 };
 
 const typographyBody1 = {
-  fontSize: '1.1rem', // ~17.6px
+  fontSize: '14px',
   fontWeight: 400,
-  lineHeight: 1.5,
-  letterSpacing: '0.00938em',
+  lineHeight: '20px',
 };
 
 const typographyBody2 = {
-  fontSize: '0.9rem', // ~14.4px
+  fontSize: '12px',
   fontWeight: 400,
-  lineHeight: 1.43,
-  letterSpacing: '0.01071em',
-};
-
-const typographyCaption = {
-  fontSize: '0.75rem', // 12px
-  fontWeight: 400,
-  lineHeight: 1.66,
-  letterSpacing: '0.03333em',
-};
-
-const typographyOverline = {
-  fontSize: '0.75rem', // 12px
-  fontWeight: 400,
-  lineHeight: 2.66,
-  letterSpacing: '0.08333em',
-  textTransform: 'uppercase' as const,
-};
-
-const typographyButton = {
-  fontSize: '1rem', // 16px
-  fontWeight: 500,
-  lineHeight: 1.75,
-  letterSpacing: '0.02857em',
-  textTransform: 'none' as const,
+  lineHeight: '13.54px',
 };
 
 export const themeOptions: ThemeOptions = {
@@ -145,14 +107,10 @@ export const themeOptions: ThemeOptions = {
     h3: typographyH3,
     h4: typographyH4,
     h5: typographyH5,
-    h6: typographyH6,
     subtitle1: typographySubtitle1,
     subtitle2: typographySubtitle2,
     body1: typographyBody1,
     body2: typographyBody2,
-    caption: typographyCaption,
-    overline: typographyOverline,
-    button: typographyButton,
   },
   spacing: spacing,
   shape: {
