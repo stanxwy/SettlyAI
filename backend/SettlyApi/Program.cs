@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SettlyModels;
+using ISettlyService;
+using SettlyService;
 
 namespace SettlyApi;
 
@@ -21,6 +23,8 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllers();
+
+        builder.Services.AddScoped<ISuburbReportService, SuburbReportService>();
 
         var app = builder.Build();
 

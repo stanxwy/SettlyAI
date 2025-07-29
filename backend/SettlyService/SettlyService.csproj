@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+<ItemGroup>
+  <ProjectReference Include="..\SettlyModels\SettlyModels.csproj" />
+  <ProjectReference Include="..\ISettlyService\ISettlyService.csproj" />
+</ItemGroup>
+
 </Project>

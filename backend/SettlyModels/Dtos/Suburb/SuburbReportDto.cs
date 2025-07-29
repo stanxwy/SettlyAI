@@ -2,7 +2,7 @@ namespace SettlyModels.Dtos
 {
     public class SuburbReportDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = String.Empty;
         public int SuburbId { get; set; }
 
         #region IncomeAndEmployment
