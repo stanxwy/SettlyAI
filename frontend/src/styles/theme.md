@@ -8,40 +8,40 @@
 
 ```typescript
 // 主色调
-theme.palette.primary.light; // #42a5f5
-theme.palette.primary.main; // #1976d2
-theme.palette.primary.dark; // #1565c0
-theme.palette.primary.contrastText; // #fff
+theme.palette.primary.light; // 浅色变体 (alpha 0.5 的 #7B61FF)
+theme.palette.primary.main; // #7B61FF
+theme.palette.primary.dark; // 深色变体 (darken 0.2 的 #7B61FF)
+theme.palette.primary.contrastText; // #fff 或 #111 (根据对比度自动计算)
 
 // 次要色调
-theme.palette.secondary.light; // #ba68c8
-theme.palette.secondary.main; // #9c27b0
-theme.palette.secondary.dark; // #7b1fa2
-theme.palette.secondary.contrastText; // #fff
+theme.palette.secondary.light; // 浅色变体 (alpha 0.5 的 #4F88F7)
+theme.palette.secondary.main; // #4F88F7
+theme.palette.secondary.dark; // 深色变体 (darken 0.2 的 #4F88F7)
+theme.palette.secondary.contrastText; // #fff 或 #111 (根据对比度自动计算)
 ```
 
 ### 语义颜色
 
 ```typescript
 // 错误色
-theme.palette.error.light; // #e57373
-theme.palette.error.main; // #f44336
-theme.palette.error.dark; // #d32f2f
+theme.palette.error.light; // 浅色变体 (alpha 0.5 的 #FF0000)
+theme.palette.error.main; // #FF0000
+theme.palette.error.dark; // 深色变体 (darken 0.2 的 #FF0000)
 
 // 警告色
-theme.palette.warning.light; // #ffb74d
-theme.palette.warning.main; // #ff9800
-theme.palette.warning.dark; // #f57c00
+theme.palette.warning.light; // 浅色变体 (alpha 0.5 的 #E67E22)
+theme.palette.warning.main; // #E67E22
+theme.palette.warning.dark; // 深色变体 (darken 0.2 的 #E67E22)
 
 // 信息色
-theme.palette.info.light; // #64b5f6
-theme.palette.info.main; // #2196f3
-theme.palette.info.dark; // #1976d2
+theme.palette.info.light; // 浅色变体 (alpha 0.5 的 #22D3EE)
+theme.palette.info.main; // #22D3EE
+theme.palette.info.dark; // 深色变体 (darken 0.2 的 #22D3EE)
 
 // 成功色
-theme.palette.success.light; // #81c784
-theme.palette.success.main; // #4caf50
-theme.palette.success.dark; // #388e3c
+theme.palette.success.light; // 浅色变体 (alpha 0.5 的 #10B981)
+theme.palette.success.main; // #10B981
+theme.palette.success.dark; // 深色变体 (darken 0.2 的 #10B981)
 ```
 
 ### 通用颜色
@@ -52,13 +52,16 @@ theme.palette.common.black; // #000
 theme.palette.common.white; // #fff
 
 // 背景色
-theme.palette.background.default; // #fafafa (light) / #121212 (dark)
-theme.palette.background.paper; // #fff (light) / #1e1e1e (dark)
+theme.palette.background.default; // #F8F9FB
+theme.palette.background.paper; // #ffffff
 
 // 文本色
-theme.palette.text.primary; // rgba(0,0,0,0.87) (light)
-theme.palette.text.secondary; // rgba(0,0,0,0.6) (light)
-theme.palette.text.disabled; // rgba(0,0,0,0.38) (light)
+theme.palette.text.primary; // #1F2937
+theme.palette.text.secondary; // #4B5563
+theme.palette.text.disabled; // #8C8D8B
+
+// 分割线
+theme.palette.divider; // #E5E7EB
 ```
 
 ## 📝 字体排版 (Typography)
@@ -66,24 +69,26 @@ theme.palette.text.disabled; // rgba(0,0,0,0.38) (light)
 ### 标题样式
 
 ```typescript
-theme.typography.h1; // 6rem (96px)
-theme.typography.h2; // 3.75rem (60px)
-theme.typography.h3; // 3rem (48px)
-theme.typography.h4; // 2.125rem (34px)
-theme.typography.h5; // 1.5rem (24px)
-theme.typography.h6; // 1.25rem (20px)
+// 字体家族: 'Poppins, Arial, sans-serif'
+
+theme.typography.h1; // 5.9rem (94px), 500粗细
+theme.typography.h2; // 3.9rem (62px), 500粗细
+theme.typography.h3; // 3rem (48px), 500粗细
+theme.typography.h4; // 2.125rem (34px), 500粗细
+theme.typography.h5; // 1.5rem (24px), 500粗细
+theme.typography.h6; // 1.25rem (20px), 500粗细
 ```
 
 ### 正文样式
 
 ```typescript
-theme.typography.subtitle1; // 1rem (16px)
-theme.typography.subtitle2; // 0.875rem (14px)
-theme.typography.body1; // 1rem (16px)
-theme.typography.body2; // 0.875rem (14px)
-theme.typography.caption; // 0.75rem (12px)
-theme.typography.overline; // 0.75rem (12px)
-theme.typography.button; // 0.875rem (14px)
+theme.typography.subtitle1; // 1.1rem (17.6px), 400粗细
+theme.typography.subtitle2; // 0.875rem (14px), 500粗细
+theme.typography.body1; // 1.1rem (17.6px), 400粗细
+theme.typography.body2; // 0.9rem (14.4px), 400粗细
+theme.typography.caption; // 0.75rem (12px), 400粗细
+theme.typography.overline; // 0.75rem (12px), 400粗细, 大写
+theme.typography.button; // 1rem (16px), 500粗细, 无文本转换
 ```
 
 ## 📏 间距系统 (Spacing)
@@ -92,23 +97,23 @@ theme.typography.button; // 0.875rem (14px)
 
 ```typescript
 theme.spacing(0); // 0px
-theme.spacing(1); // 8px
-theme.spacing(2); // 16px
-theme.spacing(3); // 24px
-theme.spacing(4); // 32px
-theme.spacing(5); // 40px
-theme.spacing(6); // 48px
-theme.spacing(7); // 56px
-theme.spacing(8); // 64px
+theme.spacing(1); // 4px
+theme.spacing(2); // 8px
+theme.spacing(3); // 12px
+theme.spacing(4); // 16px
+theme.spacing(5); // 20px
+theme.spacing(6); // 24px
+theme.spacing(7); // 28px
+theme.spacing(8); // 32px
 ```
 
 ### 多参数用法
 
 ```typescript
-theme.spacing(1, 2); // "8px 16px"
-theme.spacing(1, 2, 3); // "8px 16px 24px"
-theme.spacing(1, 2, 3, 4); // "8px 16px 24px 32px"
-theme.spacing(1, 'auto'); // "8px auto"
+theme.spacing(1, 2); // "4px 8px"
+theme.spacing(1, 2, 3); // "4px 8px 12px"
+theme.spacing(1, 2, 3, 4); // "4px 8px 12px 16px"
+theme.spacing(1, 'auto'); // "4px auto"
 ```
 
 ## 📱 断点 (Breakpoints)
@@ -148,13 +153,12 @@ theme.zIndex.modal; // 1300
 
 ```typescript
 <Box sx={{
-  color: 'primary.main',
-  bgcolor: 'background.paper',
-  p: theme.spacing(2),
-  borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[3],
+  color: 'primary.main', // #7B61FF
+  bgcolor: 'background.paper', // #ffffff
+  p: theme.spacing(2), // 8px
+  borderRadius: theme.shape.borderRadius, // 4px
   [theme.breakpoints.up('md')]: {
-    p: theme.spacing(3),
+    p: theme.spacing(3), // 12px
   }
 }} />
 ```
@@ -165,17 +169,17 @@ theme.zIndex.modal; // 1300
 import { styled } from '@mui/material/styles';
 
 const StyledBox = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
-  backgroundColor: theme.palette.background.paper,
-  color: theme.palette.text.primary,
-  borderRadius: theme.shape.borderRadius,
+  padding: theme.spacing(2), // 8px
+  backgroundColor: theme.palette.background.paper, // #ffffff
+  color: theme.palette.text.primary, // #1F2937
+  borderRadius: theme.shape.borderRadius, // 4px
 
   [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(3), // 12px
   },
 
   '&:hover': {
-    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+    backgroundColor: alpha(theme.palette.primary.main, 0.1), // 带10%透明度的 #7B61FF
   },
 }));
 ```
@@ -190,10 +194,10 @@ function MyComponent() {
 
   return (
     <div style={{
-      padding: theme.spacing(2),
-      color: theme.palette.primary.main,
+      padding: theme.spacing(2), // 8px
+      color: theme.palette.primary.main, // #7B61FF
       [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(3), // 12px
       }
     }}>
       Content

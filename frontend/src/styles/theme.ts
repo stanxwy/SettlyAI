@@ -1,42 +1,8 @@
-import { createTheme, alpha, getContrastRatio } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import type { ThemeOptions } from '@mui/material/styles';
-import {  darken } from '@mui/material/styles';
+import { createColorSet } from '../utils/themeUtils';
 
-// 创建颜色系列函数
-interface ColorSet {
-  main: string;
-  light: string;
-  dark: string;
-  contrastText: string;
-}
-
-/**
- * 创建一个颜色系列，包括主色、亮色和暗色
- * @param baseColor 基础颜色
- * @param lightFactor 变亮因子(0-1)
- * @param darkFactor 变暗因子(0-1)
- * @returns 包含主色、亮色、暗色和对比色的对象
- */
-const createColorSet = (
-  baseColor: string, 
-  lightFactor = 0.5, 
-  darkFactor = 0.2
-): ColorSet => {
-  const main = baseColor;
-  const light = alpha(baseColor, lightFactor);
-  const dark = darken(baseColor, darkFactor);
-  const contrastText = getContrastRatio(main, '#fff') > 4.5 ? '#fff' : '#111';
-  
-  return {
-    main,
-    light,
-    dark,
-    contrastText
-  };
-};
-
-
-// 基础颜色变量
+// Base colors
 const primaryBase = '#7B61FF';
 const secondaryBase = '#4F88F7';
 const errorBase = '#FF0000';
@@ -44,7 +10,7 @@ const warningBase = '#E67E22';
 const infoBase = '#22D3EE';
 const successBase = '#10B981';
 
-// 其他颜色变量
+// Other colors
 const backgroundColor = '#F8F9FB';
 const paperColor = '#ffffff';
 const textPrimaryColor = '#1F2937';
@@ -52,11 +18,11 @@ const textSecondaryColor = '#4B5563';
 const textDisabledColor = '#8C8D8B';
 const dividerColor = "#E5E7EB";
 
-// 间距和形状
+// Spacing and shape
 const spacing = 4;
 const borderRadius = 4;
 
-// 字体变量
+// Font variables
 const fontFamily = 'Poppins, Arial, sans-serif';
 
 const typographyH1 = {
