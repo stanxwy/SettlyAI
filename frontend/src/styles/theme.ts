@@ -1,5 +1,40 @@
 import { createTheme, alpha, getContrastRatio } from '@mui/material/styles';
 import type { ThemeOptions } from '@mui/material/styles';
+import {  darken } from '@mui/material/styles';
+
+// 创建颜色系列函数
+interface ColorSet {
+  main: string;
+  light: string;
+  dark: string;
+  contrastText: string;
+}
+
+/**
+ * 创建一个颜色系列，包括主色、亮色和暗色
+ * @param baseColor 基础颜色
+ * @param lightFactor 变亮因子(0-1)
+ * @param darkFactor 变暗因子(0-1)
+ * @returns 包含主色、亮色、暗色和对比色的对象
+ */
+const createColorSet = (
+  baseColor: string, 
+  lightFactor = 0.5, 
+  darkFactor = 0.2
+): ColorSet => {
+  const main = baseColor;
+  const light = alpha(baseColor, lightFactor);
+  const dark = darken(baseColor, darkFactor);
+  const contrastText = getContrastRatio(main, '#fff') > 4.5 ? '#fff' : '#111';
+  
+  return {
+    main,
+    light,
+    dark,
+    contrastText
+  };
+};
+
 
 // 基础颜色变量
 const primaryBase = '#7B61FF';
@@ -10,19 +45,20 @@ const infoBase = '#22D3EE';
 const successBase = '#10B981';
 
 // 其他颜色变量
-const backgroundColor = '#ffffff';
+const backgroundColor = '#F8F9FB';
 const paperColor = '#ffffff';
-const textPrimaryColor = 'rgba(6,6,6,0.87)';
-const textSecondaryColor = 'rgba(6,5,5,0.6)';
-const textDisabledColor = 'rgba(12,12,12,0.38)';
-const dividerColor = alpha('#000000', 0.12);
+const textPrimaryColor = '#1F2937';
+const textSecondaryColor = '#4B5563';
+const textDisabledColor = '#8C8D8B';
+const dividerColor = "#E5E7EB";
 
-
+// 间距和形状
+const spacing = 4;
+const borderRadius = 4;
 
 // 字体变量
 const fontFamily = 'Poppins, Arial, sans-serif';
 
-// 提取完整的排版配置对象
 const typographyH1 = {
   fontSize: '5.9rem', // ~94px
   fontWeight: 500,
@@ -116,16 +152,6 @@ const typographyButton = {
   textTransform: 'none' as const,
 };
 
-// 间距和形状
-const spacing = 4;
-const borderRadius = 4;
-
-// 获取适当的对比色（白色或黑色）
-const getAppropriateContrastText = (background: string): string => {
-  return getContrastRatio(background, '#fff') > 4.5 ? '#fff' : '#111';
-};
-
-// 创建主题配置
 export const themeOptions: ThemeOptions = {
   palette: {
     mode: 'light',
@@ -138,42 +164,12 @@ export const themeOptions: ThemeOptions = {
       secondary: textSecondaryColor,
       disabled: textDisabledColor,
     },
-    primary: {
-      main: alpha(primaryBase, 1),
-      light: alpha(primaryBase, 0.8),
-      dark: alpha(primaryBase, 1.2),
-      contrastText: getAppropriateContrastText(alpha(primaryBase, 1)),
-    },
-    secondary: {
-      main: alpha(secondaryBase, 1),
-      light: alpha(secondaryBase, 0.8),
-      dark: alpha(secondaryBase, 1.2),
-      contrastText: getAppropriateContrastText(alpha(secondaryBase, 1)),
-    },
-    error: {
-      main: alpha(errorBase, 1),
-      light: alpha(errorBase, 0.8),
-      dark: alpha(errorBase, 1.2),
-      contrastText: getAppropriateContrastText(alpha(errorBase, 1)),
-    },
-    warning: {
-      main: alpha(warningBase, 1),
-      light: alpha(warningBase, 0.8),
-      dark: alpha(warningBase, 1.2),
-      contrastText: getAppropriateContrastText(alpha(warningBase, 1)),
-    },
-    info: {
-      main: alpha(infoBase, 1),
-      light: alpha(infoBase, 0.8),
-      dark: alpha(infoBase, 1.2),
-      contrastText: getAppropriateContrastText(alpha(infoBase, 1)),
-    },
-    success: {
-      main: alpha(successBase, 1),
-      light: alpha(successBase, 0.8),
-      dark: alpha(successBase, 1.2),
-      contrastText: getAppropriateContrastText(alpha(successBase, 1)),
-    },
+    primary: createColorSet(primaryBase),
+    secondary: createColorSet(secondaryBase),
+    error: createColorSet(errorBase),
+    warning: createColorSet(warningBase),
+    info: createColorSet(infoBase),
+    success: createColorSet(successBase),
     divider: dividerColor,
   },
   typography: {
@@ -198,7 +194,6 @@ export const themeOptions: ThemeOptions = {
   },
 };
 
-// 创建默认主题
 const theme = createTheme(themeOptions);
 
 export default theme;
