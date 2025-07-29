@@ -6,31 +6,35 @@ namespace SettlyModels.Dtos
         public int SuburbId { get; set; }
 
         #region IncomeAndEmployment
-        public string MedianIncome { get; set; } = string.Empty;
-        public string MedianExpenses { get; set; } = string.Empty;
-        public float EmploymentRate { get; set; }
-        public float WhiteCollarRatio { get; set; }
-        public float JobGrowth { get; set; }
+        public int MedianIncome { get; set; }
+        public decimal EmploymentRate { get; set; }
+        public decimal WhiteCollarRatio { get; set; }
+        public decimal JobGrowth { get; set; }
         #endregion
 
         #region PropertyMarketInsights
-        public string MedianPrice { get; set; }  = string.Empty;
-        public string RentalYield { get; set; } =  string.Empty;
-        public decimal SalesMarketPrice { get; set; }
+        public int MedianPrice { get; set; }
         public decimal PriceGrowthThreeYear { get; set; }
-        public int SalesDaysOnMarket { get; set; }
+        public int StockOnMarket { get; set; }
         public decimal ClearanceRate { get; set; }
+
         public decimal RentalMarketWeeklyRent { get; set; }
         public decimal RentGrowthTwelveMonth { get; set; }
         public decimal VacancyRate { get; set; }
-        public int RentalDaysOnMarket { get; set; }
+        public int SalesDaysOnMarket { get; set; }
+
+
+
+        public int Population { get; set; }
+        public decimal PopulationGrowthRate { get; set; }
+        public decimal RentalYield { get; set; }
+
         #endregion
 
         #region DemandAndDevelopment
         public decimal RentersRatio { get; set; }
         public string LandSupply { get; set; } = string.Empty;
         public int BuildingApprovals { get; set; }
-        public int BuildingApprovalsTimeFrame { get; set; }
         public int DevelopmentProjects { get; set; }
         #endregion
 
@@ -44,7 +48,7 @@ namespace SettlyModels.Dtos
         #endregion
 
         #region SafetyAndScores
-        public float CrimeRate { get; set; }
+        public decimal CrimeRate { get; set; }
         public decimal AffordabilityScore { get; set; }
         public decimal GrowthPotential { get; set; }
         #endregion
