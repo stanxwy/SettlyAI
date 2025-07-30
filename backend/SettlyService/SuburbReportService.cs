@@ -36,6 +36,9 @@ namespace SettlyService
             {
                 Id = $"{suburb.Id}_{DateTime.UtcNow:yyyyMMdd}",
                 SuburbId = suburb.Id,
+                State = suburb.State,
+                Postcode = suburb.Postcode,
+                SuburbName = suburb.Name,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IncomeEmployment = _mapper.Map<IncomeEmploymentDto>(incomeEmployment),
