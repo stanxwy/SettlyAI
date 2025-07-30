@@ -1,7 +1,7 @@
-import ActionButtonContainer from '@/components/ActionButtonContainer';
-import BannerContainer from '@/components/BannerContainer';
-import BodyContainer from '@/components/BodyContainer';
-import CardContainer from '@/components/CardConatiner';
+import ActionButtonContainer from '@/components/containers/ActionButtonContainer';
+import BannerContainer from '@/components/containers/BannerContainer';
+import BodyContainer from '@/components/containers/BodyContainer';
+import CardContainer from '@/components/containers/CardConatiner';
 import FooterContainer from '@/components/Footer';
 import NavbarContainer from '@/components/NavBar';
 import { TITLES } from '@/constants/titles';
