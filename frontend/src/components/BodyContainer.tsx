@@ -2,28 +2,27 @@ import React from 'react';
 import { Container, Typography, Box, styled } from '@mui/material';
 
 type BodyContainerProps = {
-  maxHeight?: string | number;
+  minHeight?: string | number;
   title?: string;
   children?: React.ReactNode;
 };
 
 const StyledContainer = styled(Container, {
-  shouldForwardProp: (prop) => prop !== 'maxHeight',
-})<{ maxHeight?: string | number }>(({ theme, maxHeight }) => ({
-  maxHeight: maxHeight,
+  shouldForwardProp: (prop) => prop !== 'minHeight',
+})<{ minHeight?: string | number }>(({ theme, minHeight }) => ({
+  minHeight: minHeight,
   paddingTop: theme.spacing(4),
   paddingBottom: theme.spacing(4),
   backgroundColor: theme.palette.background.default,
-  overflowY: maxHeight ? 'auto' : undefined,
 }));
 
 const StyledBox = styled(Box)({
   height: '100%',
 });
 
-const BodyContainer: React.FC<BodyContainerProps> = ({ maxHeight, title, children }) => {
+const BodyContainer: React.FC<BodyContainerProps> = ({ minHeight, title, children }) => {
   return (
-    <StyledContainer maxWidth="lg" maxHeight={maxHeight}>
+    <StyledContainer maxWidth="lg" minHeight={minHeight}>
       <StyledBox>
         {title && (
           <Typography variant="h5" gutterBottom>

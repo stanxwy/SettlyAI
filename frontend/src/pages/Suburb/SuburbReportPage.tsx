@@ -7,7 +7,7 @@ import NavbarContainer from '@/components/NavBar';
 import { TITLES } from '@/constants/titles';
 import type { AppDispatch, RootState } from '@/store';
 import { fetchSuburbReport } from '@/store/slices/suburbSlice';
-import { Button,Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useLocation } from 'react-router-dom';
@@ -44,25 +44,29 @@ const SuburbReportPage: React.FC<SuburbReportPageProps> = () => {
           Welcome to {report.suburbName},{report.state},{report.postcode}
         </Typography>
       </BannerContainer>
-      <BodyContainer maxHeight={4000}>
+      <BodyContainer minHeight={1000}>
         {/* todo: replace with real card content */}
         <CardContainer
-          maxHeight={300}
+          minHeight={300}
           title={TITLES.incomeEmployment}
         ></CardContainer>
         <CardContainer
-          maxHeight={300}
+          minHeight={300}
           title={TITLES.propertyMarketInsights}
         ></CardContainer>
         <CardContainer
-          maxHeight={300}
+          minHeight={300}
           title={TITLES.demandDevelopment}
         ></CardContainer>
-        <CardContainer maxHeight={300} title={TITLES.lifeStyle}></CardContainer>
-        <CardContainer maxHeight={300} title={TITLES.safetyScore}></CardContainer>
+        <CardContainer minHeight={300} title={TITLES.lifeStyle}></CardContainer>
+        <CardContainer
+          minHeight={300}
+          title={TITLES.safetyScore}
+        ></CardContainer>
         <ActionButtonContainer>
           {/* todo:  replace with real action buttons */}
           <Button>save this suburb</Button>
+          <Button>Export PDF</Button>
         </ActionButtonContainer>
       </BodyContainer>
       <FooterContainer></FooterContainer>

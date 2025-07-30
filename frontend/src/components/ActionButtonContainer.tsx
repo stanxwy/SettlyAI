@@ -7,10 +7,10 @@ type ActionButtonProps = {
 
 const ActionButtonContainerRoot = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
-  height: 200,
+  height: 100,
   display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
+  flexDirection: 'row',
+  justifyContent: 'left',
   alignItems: 'center',
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),

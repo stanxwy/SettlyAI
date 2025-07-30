@@ -7,7 +7,7 @@ const StyledFooter = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(2),
   textAlign: 'center',
-  height: 200,
+  minHeight: 200,
 }));
 
 const Footer: React.FC = () => {
