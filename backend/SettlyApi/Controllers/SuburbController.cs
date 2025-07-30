@@ -9,7 +9,7 @@ namespace SettlyApi.Controllers
 {
 
     [ApiController]
-    [Route("suburb")]
+    [Route("api/suburb")]
     public class SuburbController : ControllerBase
     {
 
