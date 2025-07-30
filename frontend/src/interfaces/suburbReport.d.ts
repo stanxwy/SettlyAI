@@ -1,6 +1,9 @@
 export interface ISuburbReport {
   id: string;
   suburbId: number;
+  postcode: string;
+  state: string;
+  suburbName:string;
   incomeEmployment: {
     medianIncome: number;
     employmentRate: number;
