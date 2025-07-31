@@ -11,7 +11,7 @@ const StyledToolbar = styled(Toolbar)({
   minHeight: 72,
 });
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   return (
     <StyledAppBar position="static" color="transparent" elevation={0}>
       <StyledToolbar>

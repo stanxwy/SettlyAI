@@ -17,8 +17,8 @@ const StyledBanner = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const Banner: React.FC<BannerProps> = ({ children }) => {
+function BannerConatiner({ children }:BannerProps ){
   return <StyledBanner>{children}</StyledBanner>;
 };
 
-export default Banner;
+export default BannerConatiner;

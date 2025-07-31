@@ -20,7 +20,7 @@ const StyledBox = styled(Box)({
   height: '100%',
 });
 
-const BodyContainer: React.FC<BodyContainerProps> = ({ minHeight, title, children }) => {
+function BodyContainer({ minHeight, title, children }:BodyContainerProps){
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
       <StyledBox>

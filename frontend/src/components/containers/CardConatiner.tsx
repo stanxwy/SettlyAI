@@ -19,11 +19,7 @@ const StyledContainer = styled(Container, {
 
 const StyledBox = styled(Box)({});
 
-const CardContainer: React.FC<CustomContainerProps> = ({
-  minHeight,
-  title,
-  children,
-}) => {
+const CardContainer = ({minHeight,title,children}:CustomContainerProps) => {
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
       <StyledBox>

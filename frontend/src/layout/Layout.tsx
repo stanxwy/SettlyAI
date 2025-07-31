@@ -7,7 +7,7 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }:LayoutProps) => {
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh">
       <NavBar />

@@ -6,19 +6,19 @@ import { TITLES } from '@/constants/titles';
 import type { AppDispatch, RootState } from '@/store';
 import { fetchSuburbReport, setSuburbId } from '@/store/slices/suburbSlice';
 import { Button, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '@/layout/Layout';
 
 type SuburbReportPageProps = {
   location: string;
-  suburbId: string;
 };
-const SuburbReportPage: React.FC<SuburbReportPageProps> = () => {
+function SuburbReportPage({ location }: SuburbReportPageProps){
   const dispatch = useDispatch<AppDispatch>();
   const { suburbId, report, loading, error } = useSelector(
     (state: RootState) => state.suburb
   );
+  console.log("location",location);
 
   useEffect(() => {
     let id = suburbId;

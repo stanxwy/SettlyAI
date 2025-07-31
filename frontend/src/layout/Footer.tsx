@@ -10,7 +10,7 @@ const StyledFooter = styled(Box)(({ theme }) => ({
   minHeight: 200,
 }));
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <StyledFooter>
       <Typography variant="body2">&copy; 2025 My Website. All rights reserved.</Typography>
