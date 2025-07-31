@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SettlyApi\SettlyApi.csproj" />
+      <ProjectReference Include="..\Settly.DTOs\Settly.DTOs.csproj" />
     </ItemGroup>
 
 </Project>
