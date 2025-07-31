@@ -2,8 +2,6 @@ import ActionButtonContainer from '@/components/containers/ActionButtonContainer
 import BannerContainer from '@/components/containers/BannerContainer';
 import BodyContainer from '@/components/containers/BodyContainer';
 import CardContainer from '@/components/containers/CardConatiner';
-import FooterContainer from '@/layout/Footer';
-import NavbarContainer from '@/layout/NavBar';
 import { TITLES } from '@/constants/titles';
 import type { AppDispatch, RootState } from '@/store';
 import { fetchSuburbReport, setSuburbId } from '@/store/slices/suburbSlice';
@@ -11,13 +9,11 @@ import { Button, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '@/layout/Layout';
-// import { useLocation } from 'react-router-dom';
 
 type SuburbReportPageProps = {
   location: string;
   suburbId: string;
 };
-// const SuburbReportPage: React.FC<SuburbReportPageProps> = ({ location }) => {
 const SuburbReportPage: React.FC<SuburbReportPageProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { suburbId, report, loading, error } = useSelector(
@@ -43,8 +39,6 @@ const SuburbReportPage: React.FC<SuburbReportPageProps> = () => {
   if (loading) return <p>Loading report...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!report) return <p>No report found.</p>;
-
-  // const [stateCode, suburbName] = location.split('+');
 
   return (
     <Layout>
