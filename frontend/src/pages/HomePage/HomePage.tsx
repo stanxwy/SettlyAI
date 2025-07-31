@@ -12,9 +12,11 @@ const HomePage: React.FC = () => {
     state: string;
     suburbId: number;
   };
-
-  const melbourne = { suburbName: 'Melbourn', state: 'VIC', suburbId: 103 };
-  const sydney = { suburbName: 'Sydney', state: 'NSW', suburbId: 104 };
+  
+  //todo: change to fetch suburb id by suburb name and state
+  //check database to match for testing
+  const melbourne = { suburbName: 'Melbourn', state: 'VIC', suburbId: 1 };
+  const sydney = { suburbName: 'Sydney', state: 'NSW', suburbId: 2 };
 
   const checkSuburb = (suburb: Suburb) => {
     const { suburbName, state, suburbId } = suburb;
