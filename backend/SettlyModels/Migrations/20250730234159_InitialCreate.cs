@@ -77,6 +77,8 @@ namespace SettlyModels.Migrations
                     MedianRent = table.Column<int>(type: "integer", nullable: false),
                     RentGrowth12M = table.Column<decimal>(type: "numeric", nullable: false),
                     VacancyRate = table.Column<decimal>(type: "numeric", nullable: false),
+                    Population = table.Column<int>(type: "integer", nullable: false),
+                    PopulationGrowthRate = table.Column<decimal>(type: "numeric", nullable: false),
                     SnapshotDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -122,8 +124,8 @@ namespace SettlyModels.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SuburbId = table.Column<int>(type: "integer", nullable: false),
                     TransportScore = table.Column<decimal>(type: "numeric", nullable: false),
-                    DistSupermarket = table.Column<decimal>(type: "numeric", nullable: false),
-                    DistHospital = table.Column<decimal>(type: "numeric", nullable: false),
+                    SupermarketQuantity = table.Column<int>(type: "integer", nullable: false),
+                    HospitalQuantity = table.Column<int>(type: "integer", nullable: false),
                     PrimarySchoolRating = table.Column<decimal>(type: "numeric", nullable: false),
                     SecondarySchoolRating = table.Column<decimal>(type: "numeric", nullable: false),
                     HospitalDensity = table.Column<decimal>(type: "numeric", nullable: false),
@@ -172,12 +174,11 @@ namespace SettlyModels.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SuburbId = table.Column<int>(type: "integer", nullable: false),
-                    Population = table.Column<int>(type: "integer", nullable: false),
-                    PopulationGrowthRate = table.Column<decimal>(type: "numeric", nullable: false),
                     RentersRatio = table.Column<decimal>(type: "numeric", nullable: false),
-                    LandSupply = table.Column<string>(type: "text", nullable: false),
+                    DemandSupplyRatio = table.Column<decimal>(type: "numeric", nullable: false),
                     BuildingApprovals12M = table.Column<int>(type: "integer", nullable: false),
-                    SnapshotDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    SnapshotDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DevProjectsCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -227,7 +228,6 @@ namespace SettlyModels.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SuburbId = table.Column<int>(type: "integer", nullable: false),
                     CrimeRate = table.Column<decimal>(type: "numeric", nullable: false),
-                    DevProjectsCount = table.Column<int>(type: "integer", nullable: false),
                     SnapshotDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

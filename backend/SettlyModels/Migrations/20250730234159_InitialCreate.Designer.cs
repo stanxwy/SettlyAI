@@ -12,7 +12,7 @@ using SettlyModels;
 namespace SettlyModels.Migrations
 {
     [DbContext(typeof(SettlyDbContext))]
-    [Migration("20250729232755_InitialCreate")]
+    [Migration("20250730234159_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -98,6 +98,12 @@ namespace SettlyModels.Migrations
 
                     b.Property<int>("MedianRent")
                         .HasColumnType("integer");
+
+                    b.Property<int>("Population")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PopulationGrowthRate")
+                        .HasColumnType("numeric");
 
                     b.Property<decimal>("PriceGrowth3Yr")
                         .HasColumnType("numeric");
@@ -201,14 +207,11 @@ namespace SettlyModels.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("DistHospital")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("DistSupermarket")
-                        .HasColumnType("numeric");
-
                     b.Property<decimal>("HospitalDensity")
                         .HasColumnType("numeric");
+
+                    b.Property<int>("HospitalQuantity")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("PrimarySchoolRating")
                         .HasColumnType("numeric");
@@ -220,6 +223,9 @@ namespace SettlyModels.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("SuburbId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SupermarketQuantity")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("TransportScore")
@@ -380,15 +386,11 @@ namespace SettlyModels.Migrations
                     b.Property<int>("BuildingApprovals12M")
                         .HasColumnType("integer");
 
-                    b.Property<string>("LandSupply")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Population")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("PopulationGrowthRate")
+                    b.Property<decimal>("DemandSupplyRatio")
                         .HasColumnType("numeric");
+
+                    b.Property<int>("DevProjectsCount")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("RentersRatio")
                         .HasColumnType("numeric");
@@ -467,9 +469,6 @@ namespace SettlyModels.Migrations
 
                     b.Property<decimal>("CrimeRate")
                         .HasColumnType("numeric");
-
-                    b.Property<int>("DevProjectsCount")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("SnapshotDate")
                         .HasColumnType("timestamp with time zone");
