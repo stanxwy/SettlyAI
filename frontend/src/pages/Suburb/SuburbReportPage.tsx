@@ -6,7 +6,7 @@ import FooterContainer from '@/components/Footer';
 import NavbarContainer from '@/components/NavBar';
 import { TITLES } from '@/constants/titles';
 import type { AppDispatch, RootState } from '@/store';
-import { fetchSuburbReport } from '@/store/slices/suburbSlice';
+import { fetchSuburbReport, setSuburbId } from '@/store/slices/suburbSlice';
 import { Button, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,8 +24,18 @@ const SuburbReportPage: React.FC<SuburbReportPageProps> = () => {
   );
 
   useEffect(() => {
-    if (suburbId) {
-      dispatch(fetchSuburbReport(suburbId));
+    let id = suburbId;
+
+    if (!id) {
+      const fromStorage = localStorage.getItem('suburbId');
+      if (fromStorage) {
+        id = parseInt(fromStorage);
+        dispatch(setSuburbId(id));
+      }
+    }
+
+    if (id) {
+      dispatch(fetchSuburbReport(id));
     }
   }, [suburbId, dispatch]);
 

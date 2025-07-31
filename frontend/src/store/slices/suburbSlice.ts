@@ -36,6 +36,7 @@ const suburbSlice = createSlice({
   reducers: {
     setSuburbId(state, action: PayloadAction<number>) {
       state.suburbId = action.payload;
+      localStorage.setItem('suburbId', action.payload.toString());
     },
   },
   extraReducers: builder => {
@@ -55,5 +56,5 @@ const suburbSlice = createSlice({
   },
 });
 
-export const {setSuburbId} = suburbSlice.actions;
+export const { setSuburbId } = suburbSlice.actions;
 export default suburbSlice.reducer;
