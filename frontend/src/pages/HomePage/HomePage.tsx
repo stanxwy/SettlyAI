@@ -1,4 +1,5 @@
 
+import Layout from '@/layout/Layout';
 import { setSuburbId } from '@/store/slices/suburbSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -27,11 +28,11 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <h1>Home</h1>
       <button onClick={()=>checkSuburb(sydney)}>Go to Sydney</button>
       <button onClick={()=>checkSuburb(melbourne)}>Go to Melbourne</button>
-    </div>
+    </Layout>
   );
 };
 
