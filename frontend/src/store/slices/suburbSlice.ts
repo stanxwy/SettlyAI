@@ -1,9 +1,11 @@
+import { getSuburbReport } from '@/api/suburbApi';
 import type { ISuburbReport } from '@/interfaces/suburbReport';
 import {
   createAsyncThunk,
   createSlice,
   type PayloadAction,
 } from '@reduxjs/toolkit';
+
 
 interface SuburbState {
   suburbId: number | null;
@@ -19,17 +21,16 @@ const initialState: SuburbState = {
   error: null,
 };
 
-export const fetchSuburbReport = createAsyncThunk(
+export const fetchSuburbReport = createAsyncThunk<ISuburbReport, number>(
   'suburb/fetchReport',
-  async (suburbId: number) => {
-    const response = await fetch(`/api/suburb/${suburbId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch suburb report');
+  async (suburbId, thunkAPI) => {
+    try {
+      return await getSuburbReport(suburbId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue((error as Error).message);
     }
-    return (await response.json()) as ISuburbReport;
   }
 );
-
 const suburbSlice = createSlice({
   name: 'suburb',
   initialState,
@@ -58,3 +59,7 @@ const suburbSlice = createSlice({
 
 export const { setSuburbId } = suburbSlice.actions;
 export default suburbSlice.reducer;
+function fetchReportApi(suburbId: number): ISuburbReport | RejectWithValue<unknown, unknown> | PromiseLike<ISuburbReport | RejectWithValue<unknown, unknown>> {
+  throw new Error('Function not implemented.');
+}
+
