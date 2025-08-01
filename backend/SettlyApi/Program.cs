@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SettlyModels;
+using SettlyApi.Configuration;
 
 namespace SettlyApi;
 
@@ -19,12 +20,16 @@ public class Program
                 .EnableDetailedErrors()
         );
 
+        // Add CORS services
+        builder.Services.AddCorsPolicies();
+
         // Add services to the container.
         builder.Services.AddControllers();
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
+        app.UseCors("AllowAll");
         app.UseAuthorization();
         app.MapControllers();
 
