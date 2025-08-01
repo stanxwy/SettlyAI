@@ -10,15 +10,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '@/layout/Layout';
 
-type SuburbReportPageProps = {
-  location: string;
-};
-const SuburbReportPage = ({ location }: SuburbReportPageProps) => {
+const SuburbReportPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { suburbId, report, loading, error } = useSelector(
     (state: RootState) => state.suburb
   );
-  console.log("location",location);
 
   useEffect(() => {
     let id = suburbId;

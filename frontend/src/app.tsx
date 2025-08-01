@@ -5,8 +5,8 @@ import theme from './styles/theme';
 import ThemeDemo from '@/pages/ThemeDemo';
 
 import './App.css';
-import HomePage from '@/pages/HomePage/HomePage';
-import SuburbWrapper from'@/pages/Suburb/SuburbWrapper';
+import HomePage from '@/pages/HomePage';
+import SuburbReportPage from './pages/SuburbReportPage';
 
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
         <Route
          path='/' element={<HomePage/>}
         />
-         <Route path="/suburb/:location" element={<SuburbWrapper />} />
+         <Route path="/suburb/:location" element={<SuburbReportPage />} />
       </Routes>
     </ThemeProvider>
   );
