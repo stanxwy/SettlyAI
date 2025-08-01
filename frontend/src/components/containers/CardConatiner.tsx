@@ -18,17 +18,16 @@ const StyledContainer = styled(Container, {
   paddingBottom: theme.spacing(4),
 }));
 
-const StyledBox = styled(Box)({});
 
 const CardContainer = ({minHeight,title,children}:PropsWithChildren<CustomContainerProps>) => {
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
-      <StyledBox>
+      <Box>
         <Typography variant="h5" gutterBottom>
           {title}
         </Typography>
         {children}
-      </StyledBox>
+      </Box>
     </StyledContainer>
   );
 };
