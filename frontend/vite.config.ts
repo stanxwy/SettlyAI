@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
             '/api': {
               target: 'http://localhost:5100',
               changeOrigin: true,
-              rewrite: path => path.replace(/^\/api/, '/api'), // 保持 /api 前缀
+              rewrite: path => path.replace(/^\/api/, '/api'),
             },
           }
         : undefined,

@@ -1,10 +1,7 @@
-import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
+import type { PropsWithChildren } from 'react';
 
-type BannerProps = {
-  children: React.ReactNode;
-};
 
 const StyledBanner = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -17,7 +14,7 @@ const StyledBanner = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const BannerConatiner = ({ children }:BannerProps) => {
+const BannerConatiner = ({ children }:PropsWithChildren) => {
   return <StyledBanner>{children}</StyledBanner>;
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Container, styled } from '@mui/material';
+import type { PropsWithChildren } from 'react';
 
 type CustomContainerProps = {
   minHeight?: string | number;
@@ -19,7 +20,7 @@ const StyledContainer = styled(Container, {
 
 const StyledBox = styled(Box)({});
 
-const CardContainer = ({minHeight,title,children}:CustomContainerProps) => {
+const CardContainer = ({minHeight,title,children}:PropsWithChildren<CustomContainerProps>) => {
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
       <StyledBox>

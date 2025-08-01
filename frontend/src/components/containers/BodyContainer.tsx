@@ -1,10 +1,10 @@
-import React from 'react';
+
 import { Container, Typography, Box, styled } from '@mui/material';
+import type { PropsWithChildren } from 'react';
 
 type BodyContainerProps = {
   minHeight?: string | number;
   title?: string;
-  children?: React.ReactNode;
 };
 
 const StyledContainer = styled(Container, {
@@ -20,7 +20,7 @@ const StyledBox = styled(Box)({
   height: '100%',
 });
 
-const BodyContainer = ({ minHeight, title, children }:BodyContainerProps) =>{
+const BodyContainer = ({ minHeight, title, children }:PropsWithChildren<BodyContainerProps>) =>{
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
       <StyledBox>

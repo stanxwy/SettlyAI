@@ -1,9 +1,5 @@
-import React from 'react';
+import type { PropsWithChildren } from 'react';
 import { Box, styled } from '@mui/material';
-
-type ActionButtonProps = {
-  children: React.ReactNode;
-};
 
 const ActionButtonContainerRoot = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -17,7 +13,7 @@ const ActionButtonContainerRoot = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const ActionButtonContainer=({ children }: ActionButtonProps)=>{
+const ActionButtonContainer=({ children }: PropsWithChildren)=>{
   return <ActionButtonContainerRoot>{children}</ActionButtonContainerRoot>;
 }
 
