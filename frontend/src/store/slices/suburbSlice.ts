@@ -59,7 +59,5 @@ const suburbSlice = createSlice({
 
 export const { setSuburbId } = suburbSlice.actions;
 export default suburbSlice.reducer;
-function fetchReportApi(suburbId: number): ISuburbReport | RejectWithValue<unknown, unknown> | PromiseLike<ISuburbReport | RejectWithValue<unknown, unknown>> {
-  throw new Error('Function not implemented.');
-}
+
 
