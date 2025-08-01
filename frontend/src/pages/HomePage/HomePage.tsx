@@ -1,5 +1,6 @@
 
-import Layout from '@/layout/Layout';
+
+import Layout from '@/components/Layout/Layout';
 import { setSuburbId } from '@/store/slices/suburbSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

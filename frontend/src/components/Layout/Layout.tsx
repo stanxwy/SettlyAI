@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from './NavBar';
-import Footer from './Footer';
+import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
 import { Box } from '@mui/material';
 
 type LayoutProps = {

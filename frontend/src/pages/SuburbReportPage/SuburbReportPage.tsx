@@ -1,16 +1,22 @@
-import ActionButtonContainer from '@/components/containers/ActionButtonContainer';
-import BannerContainer from '@/components/containers/BannerContainer';
-import BodyContainer from '@/components/containers/BodyContainer';
-import CardContainer from '@/components/containers/CardConatiner';
-import { TITLES } from '@/constants/titles';
+import ActionButtonContainer from '@/pages/SuburbReportPage/components/ActionButtonContainer';
+import BannerContainer from '@/components/Banner/BannerContainer';
+import BodyContainer from '@/pages/SuburbReportPage/components/BodyContainer';
+import CardContainer from '@/pages/SuburbReportPage/components/CardConatiner';
 import type { AppDispatch, RootState } from '@/store';
 import { fetchSuburbReport, setSuburbId } from '@/store/slices/suburbSlice';
 import { Button, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from '@/layout/Layout';
+import Layout from '@/components/Layout/Layout';
 
 const SuburbReportPage = () => {
+  const TITLES = {
+    incomeEmployment: 'Income & Employment',
+    propertyMarketInsights: 'Property Market Insghts',
+    demandDevelopment: 'Demand & Development',
+    lifeStyle: 'LifeStyle & Accessibility',
+    safetyScore: 'Safety & Score',
+  };
   const dispatch = useDispatch<AppDispatch>();
   const { suburbId, report, loading, error } = useSelector(
     (state: RootState) => state.suburb
@@ -38,7 +44,6 @@ const SuburbReportPage = () => {
 
   return (
     <Layout>
-    
       <BannerContainer>
         {/* todo: replace with real banner content */}
         <Typography variant="h3" fontWeight={700}>
@@ -70,7 +75,6 @@ const SuburbReportPage = () => {
           <Button>Export PDF</Button>
         </ActionButtonContainer>
       </BodyContainer>
-
     </Layout>
   );
 };

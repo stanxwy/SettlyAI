@@ -5,8 +5,8 @@ import theme from './styles/theme';
 import ThemeDemo from '@/pages/ThemeDemo';
 
 import './App.css';
-import HomePage from '@/pages/HomePage';
-import SuburbReportPage from './pages/SuburbReportPage';
+import HomePage from '@/pages/HomePage/HomePage';
+import SuburbReportPage from './pages/SuburbReportPage/SuburbReportPage';
 
 
 const App = () => {
