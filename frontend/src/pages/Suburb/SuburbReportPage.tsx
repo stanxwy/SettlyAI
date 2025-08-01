@@ -13,7 +13,7 @@ import Layout from '@/layout/Layout';
 type SuburbReportPageProps = {
   location: string;
 };
-function SuburbReportPage({ location }: SuburbReportPageProps){
+const SuburbReportPage = ({ location }: SuburbReportPageProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const { suburbId, report, loading, error } = useSelector(
     (state: RootState) => state.suburb

@@ -4,7 +4,7 @@ import { setSuburbId } from '@/store/slices/suburbSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-function HomePage(){
+const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

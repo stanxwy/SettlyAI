@@ -20,7 +20,7 @@ const StyledBox = styled(Box)({
   height: '100%',
 });
 
-function BodyContainer({ minHeight, title, children }:BodyContainerProps){
+const BodyContainer = ({ minHeight, title, children }:BodyContainerProps) =>{
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
       <StyledBox>

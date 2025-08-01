@@ -17,7 +17,7 @@ const StyledBanner = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-function BannerConatiner({ children }:BannerProps ){
+const BannerConatiner = ({ children }:BannerProps) => {
   return <StyledBanner>{children}</StyledBanner>;
 };
 

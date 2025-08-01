@@ -17,7 +17,7 @@ const ActionButtonContainerRoot = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-function ActionButtonContainer({ children }: ActionButtonProps) {
+const ActionButtonContainer=({ children }: ActionButtonProps)=>{
   return <ActionButtonContainerRoot>{children}</ActionButtonContainerRoot>;
 }
 

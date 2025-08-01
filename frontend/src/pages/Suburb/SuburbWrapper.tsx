@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import SuburbReportPage from "./SuburbReportPage";
 
- function SuburbWrapper(){
+ const SuburbWrapper = () => {
   const { location } = useParams();
   return <SuburbReportPage location={location || ''}/>;
 };
