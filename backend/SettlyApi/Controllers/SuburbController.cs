@@ -33,6 +33,5 @@ namespace SettlyApi.Controllers
             return Ok(report);
 
         }
-
     }
 }
