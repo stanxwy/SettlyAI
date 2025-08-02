@@ -3,26 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 
 using ISettlyService;
 using SettlyModels.Dtos;
-using Microsoft.EntityFrameworkCore;
-using SettlyApi.Middleware;
 
 namespace SettlyApi.Controllers
 
 {
-
     [ApiController]
     [Route("api/suburb")]
     public class SuburbController : ControllerBase
     {
-
         private readonly ISuburbReportService _suburbReportService;
-        private readonly ILogger<ExceptionMiddleware> _logger;
 
-
-        public SuburbController(ISuburbReportService suburbReportService, ILogger<ExceptionMiddleware> logger)
+        public SuburbController(ISuburbReportService suburbReportService)
         {
             _suburbReportService = suburbReportService;
-            _logger = logger;
+
         }
 
         [HttpGet("{id}")]
