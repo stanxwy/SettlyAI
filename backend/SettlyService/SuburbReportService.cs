@@ -22,7 +22,8 @@ namespace SettlyService
         {
 
             var suburb = await _context.Suburbs.FindAsync(suburbId);
-            if (suburb == null) return null;
+            if (suburb == null) 
+             throw new Exception($"No report found for suburb id {suburbId}.");
 
 
             var incomeEmployment = _context.IncomeEmployments.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
