@@ -1,9 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import LifestyleAccessibilitySection from './components/LifestyleAccessibilitySection';
 
 const SuburbReportPage = () => {
   return (
     <Box>
-      <Typography>SuburbReportPage</Typography>
+      <LifestyleAccessibilitySection />
     </Box>
   );
 };

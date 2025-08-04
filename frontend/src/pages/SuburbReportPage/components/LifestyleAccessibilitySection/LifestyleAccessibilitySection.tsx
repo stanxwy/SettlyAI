@@ -1,11 +1,25 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import MetricCard from '../MetricCard';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
-const CtaBannerContainer = () => {
+const demoContent = {
+  icon: <AccountBalanceIcon />,
+  title: 'Lifestyle Accessibility',
+  value: '80%',
+  subtitle: '12 months',
+};
+
+const LifestyleAccessibilitySection = () => {
   return (
     <Box>
-      <Typography>Lifestyle Accessibility Section</Typography>
+      <MetricCard
+        icon={demoContent.icon}
+        title={demoContent.title}
+        value={demoContent.value}
+        subtitle={demoContent.subtitle}
+      />
     </Box>
   );
 };
 
-export default CtaBannerContainer;
+export default LifestyleAccessibilitySection;
