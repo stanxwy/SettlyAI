@@ -34,5 +34,7 @@ public class SettlyDbContext : DbContext
 
     public DbSet<PolicyRule> PolicyRules { get; set; } = null!;
 
+    public DbSet<EmailVerification> EmailVerifications { get; set; } = default!;
+
 
 }

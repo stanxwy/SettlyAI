@@ -20,7 +20,9 @@ public class User
     [MaxLength(255)]
     public string PasswordHash { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
+    public bool IsActive { get; set; } = false;
 
+    public ICollection<EmailVerification> EmailVerifications { get; set; } = new List<EmailVerification>();
     public ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
     public ICollection<InspectionPlan> InspectionPlans { get; set; } = new List<InspectionPlan>();
     public ICollection<LoanCalculation> LoanCalculations { get; set; } = new List<LoanCalculation>();
