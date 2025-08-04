@@ -2,8 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './styles/theme';
-import ThemeDemo from '@/pages/ThemeDemo';
-import './App.css';
+import ThemeDemo from './pages/ThemeDemo';
 import SuburbReportPage from './pages/SuburbReportPage';
 
 const App = () => {
