@@ -2,6 +2,7 @@ using SettlyModels.Dtos;
 using SettlyModels;
 using SettlyModels.Entities;
 using ISettlyService;
+using Microsoft.EntityFrameworkCore;
 
 namespace SettlyService
 {
@@ -28,6 +29,47 @@ namespace SettlyService
 
             _context.Favourites.Add(favourite);
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<Favourite>> GetFavouritesByUserAsync(int userId)
+        {
+            return await _context.Favourites
+                .Where(f => f.UserId == userId)
+                .ToListAsync();
+        }
+        public async Task<bool> DeleteFavouriteAsync(int userId, string targetType, int targetId)
+        {
+            var favourite = await _context.Favourites
+                .FirstOrDefaultAsync(f => f.UserId == userId && f.TargetType == targetType && f.TargetId == targetId);
+            if (favourite == null) return false;
+            _context.Favourites.Remove(favourite);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> ToggleFavouriteAsync(AddFavouriteDto dto, int userId)
+        {
+            var existing = await _context.Favourites.FirstOrDefaultAsync(f => f.UserId == userId && f.TargetType == dto.TargetType && f.TargetId == dto.TargetId);
+            if (existing != null)
+            {
+                _context.Favourites.Remove(existing);
+                await _context.SaveChangesAsync();
+                return false;
+            }//cancel saved
+            var newFavourite = new Favourite
+            {
+                UserId = userId,
+                TargetType = dto.TargetType,
+                TargetId = dto.TargetId,
+                Notes = dto.Notes,
+                Priority = dto.Priority,
+                CreatedAt = DateTime.UtcNow,
+            };
+            _context.Favourites.Add(newFavourite);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<Favourite?> GetSingleFavouriteAsync(string targetType, int targetId, int userId)
+        {
+            return await _context.Favourites.FirstOrDefaultAsync(f => f.UserId ==userId && f.TargetType == targetType && f.TargetId == targetId);
         }
     }
 }
