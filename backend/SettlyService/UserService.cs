@@ -10,12 +10,10 @@ namespace SettlyService;
 public class UserService : IUserService
 {
     private readonly SettlyDbContext _context;
-    private readonly IEmailVerificationService _emailVerificationService;
 
-    public UserService(SettlyDbContext context, IEmailVerificationService emailVerificationService)
+    public UserService(SettlyDbContext context)
     {
         _context = context;
-        _emailVerificationService = emailVerificationService;
     }
 
     public async Task<ResponseUserDto> RegisterAsync(RegisterUserDto RegisterUser)
@@ -38,7 +36,7 @@ public class UserService : IUserService
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            await _emailVerificationService.GenerateAndSendVerificationCodeAsync(user.Id, user.Email);
+
 
         return new ResponseUserDto
         {

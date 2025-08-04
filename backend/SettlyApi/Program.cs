@@ -28,7 +28,7 @@ public class Program
         // Add application services
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IEmailSender, StubEmailSender>();
-        builder.Services.AddScoped<IEmailVerificationService, EmailVerificationService>();
+        builder.Services.AddScoped<IVerificationCodeService, VerificationCodeService>();
 
 
         // Add services to the container.
