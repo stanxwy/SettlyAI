@@ -33,6 +33,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllers();
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         var app = builder.Build();
 
