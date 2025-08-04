@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SettlyModels\SettlyModels.csproj" />
+      <ProjectReference Include="..\SettlyService\SettlyService.csproj" />
     </ItemGroup>
 
     <ItemGroup>

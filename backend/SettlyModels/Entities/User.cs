@@ -1,10 +1,23 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 namespace SettlyModels.Entities;
 
+[Index(nameof(Email), IsUnique = true)]
 public class User
 {
     public int Id { get; set; }
+
+    [Required]
+    [MaxLength(100)]
     public string Name { get; set; } = null!;
+
+    [Required]
+    [MaxLength(255)]
+    [EmailAddress]
     public string Email { get; set; } = null!;
+
+    [Required]
+    [MaxLength(255)]
     public string PasswordHash { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
 

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SettlyModels;
 using SettlyApi.Configuration;
+using ISettlyService;
+using SettlyService;
 
 namespace SettlyApi;
 
@@ -22,6 +24,9 @@ public class Program
 
         // Add CORS services
         builder.Services.AddCorsPolicies();
+
+        // Add application services
+        builder.Services.AddScoped<IUserService, UserService>();
 
         // Add services to the container.
         builder.Services.AddControllers();
