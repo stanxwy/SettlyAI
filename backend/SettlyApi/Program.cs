@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using SettlyModels;
 using ISettlyService;
-using SettlyService;
-using SettlyService.Mapping; 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SettlyModels;
+using SettlyService;
+using SettlyService.Mapping;
 
 namespace SettlyApi;
 

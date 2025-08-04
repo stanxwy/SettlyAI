@@ -1,7 +1,6 @@
-using SettlyModels;
-using Microsoft.AspNetCore.Mvc;
-
 using ISettlyService;
+using Microsoft.AspNetCore.Mvc;
+using SettlyModels;
 using SettlyModels.Dtos;
 
 namespace SettlyApi.Controllers
