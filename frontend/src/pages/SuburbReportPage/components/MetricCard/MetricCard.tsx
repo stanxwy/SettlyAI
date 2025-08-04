@@ -14,11 +14,12 @@ const CardWrapper = styled(Card)(({ theme }) => ({
   justifyContent: 'center',
   textAlign: 'center',
   gap: theme.spacing(2),
-  width: theme.spacing(54),
   height: theme.spacing(51),
+  flex: '0 1 220px',
+  border: '2px solid red',
 }));
 
-const CustomIcon = styled(Box)(({ theme }) => ({
+const CardIcon = styled(Box)(({ theme }) => ({
   fontSize: '24px',
   color: theme.palette.primary.main,
 }));
@@ -26,7 +27,7 @@ const CustomIcon = styled(Box)(({ theme }) => ({
 const MetricCard = ({ icon, title, value, subtitle }: IMetricCardProps) => {
   return (
     <CardWrapper variant="outlined">
-      <CustomIcon>{icon}</CustomIcon>
+      <CardIcon>{icon}</CardIcon>
       <Typography variant="subtitle2">{title}</Typography>
       <Typography variant="cardValue" color="primary">
         {value}
