@@ -1,6 +1,7 @@
 using ISettlyService;
 using Microsoft.AspNetCore.Mvc;
 using Settly.DTOs;
+using SettlyModels.DTOs;
 
 namespace SettlyApi.Controllers
 {
@@ -19,6 +20,13 @@ namespace SettlyApi.Controllers
         public async Task<ActionResult<IEnumerable<SearchOutputDto>>> GetAsync(SearchInputDto dto)
         {
             var result = await _searchService.QuerySearchAsync(dto.Query);
+            return Ok(result);
+        }
+
+        [HttpGet("suggest")]
+        public async Task<ActionResult<IEnumerable<SuggestionOutputDto>>> SuggestAsync(SuggestionInputDto dto)
+        {
+            var result = await _searchService.GetSuggestionsAsync(dto.Query);
             return Ok(result);
         }
 

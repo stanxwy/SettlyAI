@@ -2,6 +2,7 @@ using ISettlyService;
 using Microsoft.EntityFrameworkCore;
 using Settly.DTOs;
 using SettlyModels;
+using SettlyModels.DTOs;
 using SettlyModels.Entities;
 namespace SettlyService
 {
@@ -50,6 +51,24 @@ namespace SettlyService
         }
         #endregion
 
+        #region Function GetSuggestionsAsync        
+        public async Task<List<SuggestionOutputDto>> GetSuggestionsAsync(string query)
+        {
+            // 1. If input is empty, null or with a length < 3, return an empty list
+            if (string.IsNullOrEmpty(query) || query.Length < 3)
+            {
+                return new List<SuggestionOutputDto>();
+            }
+
+            // 2.Escape wildcards and build prefix pattern for user query
+            var pattern = $"{EscapeForLike(query)}%";
+
+            // 3. Build and execute the combined suggestion query by search via table Subrbs and Properties in database
+            return await BuildCombinedSuggestionQuery(pattern).ToListAsync();
+        }
+        #endregion
+
+        #region Function AskBotAsync
         public async Task<BotOutputDto> AskBotAsync(string query)
         {
             return await Task.FromResult(new BotOutputDto
@@ -58,6 +77,7 @@ namespace SettlyService
                 Timestamp = DateTime.UtcNow
             });
         }
+        #endregion
 
         #region Helper Functions for Function QuerySearchAsync
 
@@ -88,8 +108,6 @@ namespace SettlyService
         //    Split raw query by common separators, trim, drop <2-char tokens.
         private string[] GetInputTokens(string query)
         {
-            if (string.IsNullOrWhiteSpace(query))
-                throw new ArgumentException("Please provide a suburb name, state, postcode or property.");
 
             var separators = new[] { ' ', ',', '-', '/' };
             return query
@@ -176,7 +194,7 @@ namespace SettlyService
             }
 
             return await q
-                .OrderBy(p => p.Price)                
+                .OrderBy(p => p.Price)
                 .Select(p => new SearchOutputDto
                 {
                     Address = p.Address,
@@ -192,7 +210,7 @@ namespace SettlyService
         // 10) Search Suburbs
         //    Project the Suburb query into DTOs.
         private Task<List<SearchOutputDto>> SearchSuburbsAsync(IQueryable<Suburb> suburbQ)
-            => suburbQ                
+            => suburbQ
                 .Select(s => new SearchOutputDto
                 {
                     Name = s.Name,
@@ -201,6 +219,89 @@ namespace SettlyService
                 })
                 .ToListAsync();
         #endregion
+
+        #region Helper Functions for Function GetSuggestionsAsync
+        // 1. Escape SQL wildcard characters of user query
+        private string EscapeForLike(string input)
+        {
+            return input
+                .Replace("%", "\\%")
+                .Replace("_", "\\_");
+        }
+
+        // 2. Build a SQL query for suburbs whose Name starts with the given pattern
+        private IQueryable<SuggestionOutputDto> SuggestBySuburbNamePattern(string pattern)
+        {
+            return _context.Suburbs
+                .AsNoTracking()
+                .Where(s => EF.Functions.ILike(s.Name, pattern))
+                .Select(s => new SuggestionOutputDto
+                {
+                    Name = s.Name,
+                    State = s.State,
+                    Postcode = s.Postcode
+                });
+        }
+
+        // 3. Build a query for suburbs whose State starts with the given pattern
+        private IQueryable<SuggestionOutputDto> SuggestBySuburbStatePattern(string pattern)
+        {
+            return _context.Suburbs
+                .AsNoTracking()
+                .Where(s => EF.Functions.ILike(s.State, pattern))
+                .Select(s => new SuggestionOutputDto
+                {
+                    Name = s.Name,
+                    State = s.State,
+                    Postcode = s.Postcode
+                });
+        }
+
+        // 4. Build a query for suburbs whose Postcode starts with the given pattern
+        private IQueryable<SuggestionOutputDto> SuggestBySuburbStateCodePattern(string pattern)
+        {
+            return _context.Suburbs
+                .AsNoTracking()
+                .Where(s => EF.Functions.ILike(s.Postcode, pattern))
+                .Select(s => new SuggestionOutputDto
+                {
+                    Name = s.Name,
+                    State = s.State,
+                    Postcode = s.Postcode
+                });
+        }
+
+        // 5. Build a query for properties whose Address starts with the given pattern
+        private IQueryable<SuggestionOutputDto> SuggestByPropertyAddressPattern(string pattern)
+        {
+            return _context.Properties
+                .AsNoTracking()
+                .Include(p => p.Suburb)
+                .Where(p => EF.Functions.ILike(p.Address, pattern))
+                .Select(p => new SuggestionOutputDto
+                {
+                    Name = p.Address,
+                    State = p.Suburb.State,
+                    Postcode = p.Suburb.Postcode
+                });
+        }
+
+        // 6. Combine all individual queries into one ordered suggestion stream
+        private IQueryable<SuggestionOutputDto> BuildCombinedSuggestionQuery(string pattern)
+        {
+            var suburbsByName = SuggestBySuburbNamePattern(pattern);
+            var suburbsByState = SuggestBySuburbStatePattern(pattern);
+            var suburbsByStateCode = SuggestBySuburbStateCodePattern(pattern);
+            var propertiesByAddress = SuggestByPropertyAddressPattern(pattern);
+
+            return suburbsByName
+                .Union(suburbsByState)
+                .Union(suburbsByStateCode)
+                .Union(propertiesByAddress)
+                .OrderBy(s => s.Name);
+        }
+        #endregion
+
 
     }
 }
