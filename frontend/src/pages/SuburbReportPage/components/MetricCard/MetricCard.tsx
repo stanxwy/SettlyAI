@@ -15,8 +15,6 @@ const CardWrapper = styled(Card)(({ theme }) => ({
   textAlign: 'center',
   gap: theme.spacing(2),
   height: theme.spacing(51),
-  flex: '0 1 220px',
-  border: '2px solid red',
 }));
 
 const CardIcon = styled(Box)(({ theme }) => ({

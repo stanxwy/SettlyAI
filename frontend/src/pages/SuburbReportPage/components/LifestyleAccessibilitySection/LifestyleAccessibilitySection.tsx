@@ -45,22 +45,14 @@ const data = [
     value: '80%',
     subtitle: '12 months',
   },
-  {
-    icon: <AccountBalanceIcon />,
-    title: 'Lifestyle Accessibility',
-    value: '80%',
-    subtitle: '12 months',
-  },
 ];
 
 const CardsGroup = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, minmax(0, 220px))',
   columnGap: theme.spacing(6),
   rowGap: theme.spacing(12),
-  maxWidth: '980px',
   border: '1px solid blue',
-  justifyContent: 'center',
 }));
 
 const LifestyleAccessibilitySection = () => {
