@@ -16,31 +16,27 @@ namespace SettlyService
         #region Function QuerySearchAsync
         public async Task<List<SearchOutputDto>> QuerySearchAsync(string query)
         {
-            // 1. Validate raw input from user, throw error with empty input
-            if (string.IsNullOrWhiteSpace(query))
-                throw new ArgumentException("Please provide a suburb name, state, postcode or property address.");
-
-            // 2. Tokenize & filter out trivial terms
+            // 1. Tokenize & filter out trivial terms
             var inputTokens = GetInputTokens(query);
             if (!inputTokens.Any())
                 return new List<SearchOutputDto>();
 
-            // 3. Parse postcode, state & remaining keywords, return empty list if nothing match with our Database
+            // 2. Parse postcode, state & remaining keywords, return empty list if nothing match with our Database
             var (postcode, state, searchKeywords) = ExtractSearchKeywords(inputTokens);
             if (!HasSearchCriteria(postcode, state, searchKeywords))
                 return new List<SearchOutputDto>();
 
-            // 4. Build and refine the Suburb query for Database
+            // 3. Build and refine the Suburb query for Database
             var suburbQ = BuildSuburbQuery(postcode, state, searchKeywords)
                              .AsNoTracking()
                              .OrderBy(s => s.Name);
 
-            // 5. Execute to get matching suburb IDs in our Suburb table
+            // 4. Execute to get matching suburb IDs in our Suburb table
             var suburbIds = await suburbQ.Select(s => s.Id).ToListAsync();
             if (!suburbIds.Any())
                 return new List<SearchOutputDto>();
 
-            // 6. If any keyword is a property type, attempt a Property search using suburb IDs we obtained in step 5.
+            // 5. If any keyword is a property type, attempt a Property search using suburb IDs we obtained in step 5.
             var propertyTypes = new[] { "House", "Apartment", "Townhouse", "Unit", "Villa" };
             if (searchKeywords.Any(k => propertyTypes.Contains(k, StringComparer.OrdinalIgnoreCase)))
             {
@@ -49,7 +45,7 @@ namespace SettlyService
                     return props;
             }
 
-            // 7. Fallback: return Suburb-only results if no keyword matches with Properties table
+            // 6. Fallback: return Suburb-only results if no keyword matches with Properties table
             return await SearchSuburbsAsync(suburbQ);
         }
         #endregion
@@ -161,7 +157,7 @@ namespace SettlyService
 
         // 9) Search Properties
         //    In the given suburb IDs, filter properties by type/address keywords,
-        //    then project top 10 by price into DTOs.
+        //    then project into DTOs.
         private async Task<List<SearchOutputDto>> SearchPropertiesAsync(
             IEnumerable<int> suburbIds,
             List<string> searchKeywords)
@@ -180,8 +176,7 @@ namespace SettlyService
             }
 
             return await q
-                .OrderBy(p => p.Price)
-                .Take(10)
+                .OrderBy(p => p.Price)                
                 .Select(p => new SearchOutputDto
                 {
                     Address = p.Address,
@@ -195,10 +190,9 @@ namespace SettlyService
         }
 
         // 10) Search Suburbs
-        //    Project the Suburb query into DTOs and return top 10.
+        //    Project the Suburb query into DTOs.
         private Task<List<SearchOutputDto>> SearchSuburbsAsync(IQueryable<Suburb> suburbQ)
-            => suburbQ
-                .Take(10)
+            => suburbQ                
                 .Select(s => new SearchOutputDto
                 {
                     Name = s.Name,
