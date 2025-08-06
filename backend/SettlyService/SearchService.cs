@@ -17,27 +17,27 @@ namespace SettlyService
         #region Function QuerySearchAsync
         public async Task<List<SearchOutputDto>> QuerySearchAsync(string query)
         {
-            // 1. Tokenize & filter out trivial terms
+            if (string.IsNullOrEmpty(query) || query.Length < 3)
+            {
+                return new List<SearchOutputDto>();
+            }
+
             var inputTokens = GetInputTokens(query);
             if (!inputTokens.Any())
                 return new List<SearchOutputDto>();
 
-            // 2. Parse postcode, state & remaining keywords, return empty list if nothing match with our Database
             var (postcode, state, searchKeywords) = ExtractSearchKeywords(inputTokens);
             if (!HasSearchCriteria(postcode, state, searchKeywords))
                 return new List<SearchOutputDto>();
 
-            // 3. Build and refine the Suburb query for Database
             var suburbQ = BuildSuburbQuery(postcode, state, searchKeywords)
                              .AsNoTracking()
                              .OrderBy(s => s.Name);
 
-            // 4. Execute to get matching suburb IDs in our Suburb table
             var suburbIds = await suburbQ.Select(s => s.Id).ToListAsync();
             if (!suburbIds.Any())
                 return new List<SearchOutputDto>();
 
-            // 5. If any keyword is a property type, attempt a Property search using suburb IDs we obtained in step 5.
             var propertyTypes = new[] { "House", "Apartment", "Townhouse", "Unit", "Villa" };
             if (searchKeywords.Any(k => propertyTypes.Contains(k, StringComparer.OrdinalIgnoreCase)))
             {
@@ -46,7 +46,6 @@ namespace SettlyService
                     return props;
             }
 
-            // 6. Fallback: return Suburb-only results if no keyword matches with Properties table
             return await SearchSuburbsAsync(suburbQ);
         }
         #endregion
@@ -54,16 +53,13 @@ namespace SettlyService
         #region Function GetSuggestionsAsync        
         public async Task<List<SuggestionOutputDto>> GetSuggestionsAsync(string query)
         {
-            // 1. If input is empty, null or with a length < 3, return an empty list
             if (string.IsNullOrEmpty(query) || query.Length < 3)
             {
                 return new List<SuggestionOutputDto>();
             }
 
-            // 2.Escape wildcards and build prefix pattern for user query
             var pattern = $"{EscapeForLike(query)}%";
 
-            // 3. Build and execute the combined suggestion query by search via table Subrbs and Properties in database
             return await BuildCombinedSuggestionQuery(pattern).ToListAsync();
         }
         #endregion
@@ -81,12 +77,10 @@ namespace SettlyService
 
         #region Helper Functions for Function QuerySearchAsync
 
-        // 1) Australian postcode: exactly 4 numeric digits
         private bool IsPostcode(string inputToken)
             => inputToken.Length == 4
                && int.TryParse(inputToken, out _);
 
-        // 2) Australian state code (NSW, VIC, QLD, etc.)
         private static readonly HashSet<string> _states = new(StringComparer.OrdinalIgnoreCase)
         {
             "NSW","VIC","QLD","WA","SA","TAS","ACT","NT"
@@ -94,7 +88,6 @@ namespace SettlyService
         private bool IsState(string inputToken)
             => _states.Contains(inputToken);
 
-        // 3) Common address terms to ignore (ave, st, rd, etc.)
         private static readonly HashSet<string> _commonWords = new(StringComparer.OrdinalIgnoreCase)
         {
             "avenue","ave","street","st","road","rd",
@@ -104,8 +97,6 @@ namespace SettlyService
         private bool IsCommonWord(string inputToken)
             => _commonWords.Contains(inputToken);
 
-        // 4) Tokenize & clean
-        //    Split raw query by common separators, trim, drop <2-char tokens.
         private string[] GetInputTokens(string query)
         {
 
@@ -117,13 +108,9 @@ namespace SettlyService
                 .ToArray();
         }
 
-        // 5) Returns true if the user supplied at least one search criterion (postcode, state, or free-text keywords).
-
         private bool HasSearchCriteria(string postcode, string state, List<string> keywords)
             => !string.IsNullOrEmpty(postcode) || !string.IsNullOrEmpty(state) || keywords.Any();
 
-        // 6) Classify tokens
-        //    Extract postcode, state; collect everything else as keywords.
         private (string Postcode, string State, List<string> Keywords) ExtractSearchKeywords(string[] tokens)
         {
             string postcode = "", state = "";
@@ -139,8 +126,6 @@ namespace SettlyService
             return (postcode, state, keywords);
         }
 
-        // 7) Build ILIKE pattern
-        //    Escape SQL wildcards, then wrap in % for a contains-style search.
         private string BuildLikePattern(string token)
         {
             var escaped = token
@@ -149,8 +134,6 @@ namespace SettlyService
             return $"%{escaped}%";
         }
 
-        // 8) Build Suburb query
-        //    Apply postcode, state and name-keyword filters to Suburbs set.
         private IQueryable<Suburb> BuildSuburbQuery(
             string postcode,
             string state,
@@ -173,9 +156,6 @@ namespace SettlyService
             return q;
         }
 
-        // 9) Search Properties
-        //    In the given suburb IDs, filter properties by type/address keywords,
-        //    then project into DTOs.
         private async Task<List<SearchOutputDto>> SearchPropertiesAsync(
             IEnumerable<int> suburbIds,
             List<string> searchKeywords)
@@ -207,8 +187,6 @@ namespace SettlyService
                 .ToListAsync();
         }
 
-        // 10) Search Suburbs
-        //    Project the Suburb query into DTOs.
         private Task<List<SearchOutputDto>> SearchSuburbsAsync(IQueryable<Suburb> suburbQ)
             => suburbQ
                 .Select(s => new SearchOutputDto
@@ -221,7 +199,6 @@ namespace SettlyService
         #endregion
 
         #region Helper Functions for Function GetSuggestionsAsync
-        // 1. Escape SQL wildcard characters of user query
         private string EscapeForLike(string input)
         {
             return input
@@ -229,7 +206,6 @@ namespace SettlyService
                 .Replace("_", "\\_");
         }
 
-        // 2. Build a SQL query for suburbs whose Name starts with the given pattern
         private IQueryable<SuggestionOutputDto> SuggestBySuburbNamePattern(string pattern)
         {
             return _context.Suburbs
@@ -243,7 +219,6 @@ namespace SettlyService
                 });
         }
 
-        // 3. Build a query for suburbs whose State starts with the given pattern
         private IQueryable<SuggestionOutputDto> SuggestBySuburbStatePattern(string pattern)
         {
             return _context.Suburbs
@@ -257,7 +232,6 @@ namespace SettlyService
                 });
         }
 
-        // 4. Build a query for suburbs whose Postcode starts with the given pattern
         private IQueryable<SuggestionOutputDto> SuggestBySuburbStateCodePattern(string pattern)
         {
             return _context.Suburbs
@@ -271,7 +245,6 @@ namespace SettlyService
                 });
         }
 
-        // 5. Build a query for properties whose Address starts with the given pattern
         private IQueryable<SuggestionOutputDto> SuggestByPropertyAddressPattern(string pattern)
         {
             return _context.Properties
@@ -286,7 +259,7 @@ namespace SettlyService
                 });
         }
 
-        // 6. Combine all individual queries into one ordered suggestion stream
+
         private IQueryable<SuggestionOutputDto> BuildCombinedSuggestionQuery(string pattern)
         {
             var suburbsByName = SuggestBySuburbNamePattern(pattern);
