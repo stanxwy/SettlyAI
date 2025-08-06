@@ -15,35 +15,11 @@ namespace SettlyService
             _context = context;
         }
 
-        public async Task AddFavouriteAsync(AddFavouriteDto dto, int userId)
-        {
-            var favourite = new Favourite
-            {
-                UserId = userId,
-                TargetType = dto.TargetType,
-                TargetId = dto.TargetId,
-                Notes = dto.Notes,
-                Priority = dto.Priority,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            _context.Favourites.Add(favourite);
-            await _context.SaveChangesAsync();
-        }
         public async Task<List<Favourite>> GetFavouritesByUserAsync(int userId)
         {
             return await _context.Favourites
                 .Where(f => f.UserId == userId)
                 .ToListAsync();
-        }
-        public async Task<bool> DeleteFavouriteAsync(int userId, string targetType, int targetId)
-        {
-            var favourite = await _context.Favourites
-                .FirstOrDefaultAsync(f => f.UserId == userId && f.TargetType == targetType && f.TargetId == targetId);
-            if (favourite == null) return false;
-            _context.Favourites.Remove(favourite);
-            await _context.SaveChangesAsync();
-            return true;
         }
         public async Task<bool> ToggleFavouriteAsync(AddFavouriteDto dto, int userId)
         {

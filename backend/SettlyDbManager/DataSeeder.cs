@@ -396,34 +396,6 @@ public class DataSeeder
 
         await _context.ChatLogs.AddRangeAsync(chatLogs);
     }
-
-    // Second level dependent entity seeding methods
-    //Favourites' data from user saved, no need fake data
-    // private async Task SeedFavouritesAsync()
-    // {
-    //     var userIds = await _context.Users.Select(u => u.Id).ToListAsync();
-    //     var propertyIds = await _context.Properties.Select(p => p.Id).ToListAsync();
-
-    //     var favourites = new List<Favourite>();
-    //     foreach (var userId in userIds)
-    //     {
-    //         var favouriteCount = new Faker().Random.Int(0, 8);
-    //         var selectedProperties = new Faker().PickRandom(propertyIds, favouriteCount).ToList();
-
-    //         foreach (var propertyId in selectedProperties)
-    //         {
-    //             favourites.Add(new Favourite
-    //             {
-    //                 UserId = userId,
-    //                 PropertyId = propertyId,
-    //                 CreatedAt = new Faker().Date.Between(DateTime.UtcNow.AddMonths(-6), DateTime.UtcNow)
-    //             });
-    //         }
-    //     }
-
-    //     await _context.Favourites.AddRangeAsync(favourites);
-    // }
-
     private async Task SeedInspectionPlansAsync()
     {
         var userIds = await _context.Users.Select(u => u.Id).ToListAsync();

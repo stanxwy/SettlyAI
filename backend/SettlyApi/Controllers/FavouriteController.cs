@@ -14,32 +14,12 @@ namespace SettlyApi.Controllers
         {
             _favouriteService = favouriteService;
         }
-
-
-        [HttpPost]
-        public async Task<IActionResult> AddFavourite([FromBody] AddFavouriteDto dto)
-        {
-            var userId = 1; //mock
-
-            await _favouriteService.AddFavouriteAsync(dto, userId);
-
-            return Ok(new { success = true });
-        }
         [HttpGet]
         public async Task<IActionResult> GetFavourites()
         {
             var userId = 1; //mock data
             var favourites = await _favouriteService.GetFavouritesByUserAsync(userId);
             return Ok(favourites);
-        }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteFavourite([FromQuery] string targetType, [FromQuery] int targetId)
-        {
-            int userId = 1;//mock data
-            var result = await _favouriteService.DeleteFavouriteAsync(userId, targetType, targetId);
-            if (!result)
-                return NotFound(new { message = "Favourite not found" });
-            return Ok(new { success = true });
         }
         [HttpPost("toggle")]
         public async Task<IActionResult> ToggleFavourite([FromBody] AddFavouriteDto dto)
