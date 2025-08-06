@@ -49,7 +49,7 @@ public class AuthService : IAuthService
 
             var savedUser = await _userService.AddUserAsync(user);
 
-            var (code, actualType) = await _verificationCodeService.GenerateAndSaveCodeAsync(savedUser.Id, registerUser.VerificationType);
+            var (code, actualType) = await _verificationCodeService.SaveCodeAsync(savedUser.Id, registerUser.VerificationType);
 
             switch (actualType)
             {

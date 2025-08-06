@@ -2,6 +2,7 @@ using ISettlyService;
 using SettlyModels;
 using SettlyModels.Entities;
 using SettlyModels.Enums;
+using System.Security.Cryptography;
 
 namespace SettlyService;
 
@@ -14,11 +15,11 @@ public class VerificationCodeService : IVerificationCodeService
         _context = context;
     }
 
-    public async Task<(string code, VerificationType actualType)> GenerateAndSaveCodeAsync(int userId,
+    public async Task<(string code, VerificationType actualType)> SaveCodeAsync(int userId,
         VerificationType? verificationType)
     {
         var actualType = verificationType ?? VerificationType.Email;
-        var code = new Random().Next(100000, 999999).ToString();
+        var code = GenerateSecureRandomCode();
         var expiry = DateTime.UtcNow.AddMinutes(15);
 
         var verification = new Verification
@@ -35,5 +36,11 @@ public class VerificationCodeService : IVerificationCodeService
         await _context.SaveChangesAsync();
 
         return (code, actualType);
+    }
+
+    private static string GenerateSecureRandomCode()
+    {
+        var code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString();
+        return code;
     }
 }
