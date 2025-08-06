@@ -16,6 +16,12 @@ public class UserService : IUserService
         _context = context;
     }
 
+    public async Task<User> AddUserAsync(User user)
+    {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
     public async Task<ResponseUserDto> RegisterAsync(RegisterUserDto RegisterUser)
     {
         var existing = await _context.Users.FirstOrDefaultAsync(u => u.Email == RegisterUser.Email);
@@ -34,15 +40,16 @@ public class UserService : IUserService
             CreatedAt = DateTime.UtcNow
         };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+        var savedUser = await AddUserAsync(user);
 
 
         return new ResponseUserDto
         {
-            Id = user.Id,
-            FullName = user.Name,
-            Email = user.Email
+            Id = savedUser.Id,
+            FullName = savedUser.Name,
+            Email = savedUser.Email
         };
     }
+
+
 }
