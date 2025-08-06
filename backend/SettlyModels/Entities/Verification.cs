@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using SettlyModels.Enums;
 
 namespace SettlyModels.Entities;
 
-public class EmailVerification
+public class Verification
 {
     public int Id { get; set; }
 
@@ -14,7 +15,7 @@ public class EmailVerification
     [Required]
     [MaxLength(20)]
     public string Code { get; set; } = null!;
-
+    public VerificationType VerificationType { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public DateTime Expiry { get; set; }

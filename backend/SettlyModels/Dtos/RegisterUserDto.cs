@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using SettlyModels.Enums;
 using SettlyModels.Validation;
 
 namespace SettlyModels.Dtos;
@@ -12,6 +13,9 @@ public class RegisterUserDto
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = null!;
+
+    [Range(1, 1, ErrorMessage = "Only Email verification is supported for now.")]
+    public VerificationType? VerificationType { get; set; }
 
     [Required(ErrorMessage = "Password is required")]
     [ValidPassword]

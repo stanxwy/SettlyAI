@@ -1,6 +1,7 @@
 using ISettlyService;
 using Microsoft.AspNetCore.Mvc;
 using SettlyModels.Dtos;
+using SettlyModels.Enums;
 
 namespace SettlyApi.Controllers;
 
@@ -22,13 +23,24 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<ResponseUserDto>> Register([FromBody] RegisterUserDto registerUser)
     {
+
         var user = await _userService.RegisterAsync(registerUser);
-        var code  = await _verificationCodeService.GenerateAndSaveCodeAsync(user.Id);
-        await _emailSender.SendAsync(
-            user.Email,
-            "Email Verification Code",
-            $"Your verification code is: {code}"
-        );
+        var (code, actualType) = await _verificationCodeService.GenerateAndSaveCodeAsync(user.Id, registerUser.VerificationType);
+
+        switch (actualType)
+        {
+            case VerificationType.Email:
+                await _emailSender.SendAsync(
+                    user.Email,
+                    "Email Verification Code",
+                    $"Your email verification code is {code}."
+                );
+                break;
+
+            default:
+                throw new ArgumentException($"Unsupported verification type: {registerUser.VerificationType}");
+        }
+
         return Ok(user);
     }
 }
