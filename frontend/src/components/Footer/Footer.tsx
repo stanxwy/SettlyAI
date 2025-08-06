@@ -8,11 +8,11 @@ const StyledFooter = styled(Box)(({ theme }) => ({
   textAlign: 'center',
   minHeight: 200,
 }));
-
+const copyright = `&copy; 2025 My Website. All rights reserved.`;
 const Footer = () => {
   return (
     <StyledFooter>
-      <Typography variant="body2">&copy; 2025 My Website. All rights reserved.</Typography>
+      <Typography variant="body2">{copyright}</Typography>
     </StyledFooter>
   );
 };
