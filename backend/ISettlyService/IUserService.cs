@@ -1,8 +1,8 @@
-using SettlyModels.Dtos;
+using SettlyModels.Entities;
 
 namespace ISettlyService;
 
 public interface IUserService
 {
-    Task<ResponseUserDto> RegisterAsync(RegisterUserDto user);
+    Task<User> AddUserAsync(User user);
 }
