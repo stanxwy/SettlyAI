@@ -1,7 +1,9 @@
+using ISettlyService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using SettlyModels;
 using SettlyService;
-using ISettlyService;
+using SettlyService.Mapping;
 
 namespace SettlyApi
 {
@@ -20,11 +22,10 @@ namespace SettlyApi
                     .EnableSensitiveDataLogging()
                     .EnableDetailedErrors()
             );
-
-            // Add services to the container.
-            builder.Services.AddControllers();
-            builder.Services.AddScoped<IFavouriteService, FavouriteService>();
-
+        // Add services to the container.
+        builder.Services.AddControllers();
+        builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddScoped<ISuburbReportService, SuburbReportService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
