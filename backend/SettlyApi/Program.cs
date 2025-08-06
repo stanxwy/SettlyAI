@@ -27,6 +27,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<ISuburbReportService, SuburbReportService>();
+        builder.Services.AddScoped<IPropertyDetailService, PropertyDetailService>();
 
         var app = builder.Build();
 
