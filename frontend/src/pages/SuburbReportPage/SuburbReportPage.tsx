@@ -105,11 +105,8 @@ const SuburbReportPage = () => {
       </BannerContainer>
       <BodyWrapper minHeight={1000}>
         {/* todo: replace with real card content */}
-        <CardWrapper
-          minHeight={300}
-          title={TITLES.incomeEmployment}
-        ></CardWrapper>
-        <CardWrapper minHeight={300} title={TITLES.propertyMarketInsights}>
+        
+        <CardWrapper minHeight={300}>
           <MetricCardsSection
             title="Lifestyle Accessibility"
             data={metricCardsData}
