@@ -5,6 +5,7 @@ using SettlyModels;
 using SettlyService;
 using SettlyService.Mapping;
 
+
 namespace SettlyApi;
 
 public class Program
@@ -27,6 +28,8 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<ISuburbReportService, SuburbReportService>();
+
+        builder.Services.AddTransient<IPopulationSupplyService, PopulationSupplyService>();
 
         var app = builder.Build();
 
