@@ -13,8 +13,8 @@ const ActionButtonContainerRoot = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const ActionButtonContainer=({ children }: PropsWithChildren)=>{
+const ActionButtonWrapper=({ children }: PropsWithChildren)=>{
   return <ActionButtonContainerRoot>{children}</ActionButtonContainerRoot>;
 }
 
-export default ActionButtonContainer;
+export default ActionButtonWrapper;

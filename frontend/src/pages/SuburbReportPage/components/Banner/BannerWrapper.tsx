@@ -12,6 +12,7 @@ const StyledBanner = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(3),
   textAlign: 'center',
+  width:'100%',
 }));
 
 const BannerConatiner = ({ children }:PropsWithChildren) => {

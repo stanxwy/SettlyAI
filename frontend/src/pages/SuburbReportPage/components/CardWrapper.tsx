@@ -20,7 +20,7 @@ const StyledContainer = styled(Container, {
 }));
 
 
-const CardContainer = ({minHeight,title,children}:PropsWithChildren<CustomContainerProps>) => {
+const CardWrapper = ({minHeight,title,children}:PropsWithChildren<CustomContainerProps>) => {
   return (
     <StyledContainer maxWidth="lg" minHeight={minHeight}>
         <Typography variant="h4" gutterBottom >
@@ -31,4 +31,4 @@ const CardContainer = ({minHeight,title,children}:PropsWithChildren<CustomContai
   );
 };
 
-export default CardContainer;
+export default CardWrapper;

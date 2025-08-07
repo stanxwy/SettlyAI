@@ -1,21 +1,16 @@
-import React from 'react';
 import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
-import { Box } from '@mui/material';
+import { Outlet } from 'react-router-dom';
 
-type LayoutProps = {
-  children: React.ReactNode;
-};
-
-const Layout = ({ children }:LayoutProps) => {
+const Layout = () => {
   return (
-    <Box display="flex" flexDirection="column" minHeight="100vh">
+    <div>
       <NavBar />
-      <Box component="main" flexGrow={1}>
-        {children}
-      </Box>
+      <main>
+        <Outlet />
+      </main>
       <Footer />
-    </Box>
+    </div>
   );
 };
 
