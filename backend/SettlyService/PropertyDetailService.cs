@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using AutoMapper;
 using ISettlyService;
-using Microsoft.EntityFrameworkCore;
 using SettlyModels;
 using SettlyModels.Dtos;
 
@@ -19,27 +18,16 @@ namespace SettlyService
             _context = context;
             _mapper = mapper;
         }
+
+
         public async Task<PropertyDetailDto> GeneratePropertyDetailAsync(int propertyId)
         {
 
-            var query = from p in _context.Properties
-                        join s in _context.Suburbs on p.SuburbId equals s.Id into ps
-                        from suburb in ps.DefaultIfEmpty()
-                        where p.Id == propertyId
-                        select new
-                        {
-                            Property = p,
-                            SuburbName = suburb != null ? suburb.Name : null
-                        };
-
-            var result = await query.SingleOrDefaultAsync();
-
-            if (result == null)
+            var property = await _context.Properties.FindAsync(propertyId);
+            if (property == null)
                 throw new KeyNotFoundException($"No property found for property id {propertyId}.");
 
-            var propertyDto = _mapper.Map<PropertyDetailDto>(result.Property);
-            propertyDto.Suburb = result.SuburbName;
-
+            var propertyDto = _mapper.Map<PropertyDetailDto>(property);
             return propertyDto;
         }
 
