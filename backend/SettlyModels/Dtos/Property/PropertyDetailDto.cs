@@ -2,7 +2,7 @@ namespace SettlyModels.Dtos;
 
 public class PropertyDetailDto
 {
-    public string Id { get; set; } = string.Empty;
+    public int Id { get; set; }
 
     public int SuburbId { get; set; }
     public string Address { get; set; } = null!;
