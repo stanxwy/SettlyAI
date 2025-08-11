@@ -15,28 +15,25 @@ namespace SettlyApi.Controllers
             _favouriteService = favouriteService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetFavourites()
+        public async Task<IActionResult> GetFavourites([FromQuery] int userId)
         {
-            var userId = 1; //mock data
-            var favourites = await _favouriteService.GetFavouritesByUserAsync(userId);
+            var favourites = await _favouriteService.GetFavourites(userId);
             return Ok(favourites);
         }
         [HttpPost("toggle")]
-        public async Task<IActionResult> ToggleFavourite([FromBody] AddFavouriteDto dto)
+        public async Task<IActionResult> ToggleFavourite([FromBody] AddFavouriteDto dto, [FromQuery] int userId)
         {
-            var userId = 1;//mock data
             var isSaved = await _favouriteService.ToggleFavouriteAsync(dto, userId);
             return Ok(new {
                 isSaved,
                 message = isSaved ? "Favourite added." : "Favourite removed"});
         }
         [HttpGet("single")]
-        public async Task<IActionResult> GetSingleFavourite([FromQuery] string targetType, [FromQuery] int targetId)
+        public async Task<IActionResult> GetSingleFavourite([FromQuery] string targetType, [FromQuery] int targetId, [FromQuery] int userId)
         {
-            var userId = 1;//mock data
             var favourite = await _favouriteService.GetSingleFavouriteAsync(targetType, targetId, userId);
             if (favourite == null)
-                return NotFound(new { isSaved = false });
+                return Ok(new { isSaved = false });
             return Ok(new
             {
                 isSaved = true,
