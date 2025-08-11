@@ -32,12 +32,13 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<ISuburbReportService, SuburbReportService>();
-
+        builder.Services.AddScoped<IFavouriteService, FavouriteService>();
         builder.Services.AddTransient<IPopulationSupplyService, PopulationSupplyService>();
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
+        app.UseRouting();
         app.UseAuthorization();
         app.MapControllers();
 
