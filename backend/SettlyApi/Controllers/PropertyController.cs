@@ -7,7 +7,7 @@ namespace SettlyApi.Controllers
 
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/properties")]
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyDetailService _propertyDetailService;
