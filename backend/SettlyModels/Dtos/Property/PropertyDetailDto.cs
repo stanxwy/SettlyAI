@@ -4,7 +4,7 @@ public class PropertyDetailDto
 {
     public string Id { get; set; } = string.Empty;
 
-    public string Suburb { get; set; } = null!;
+    public string Suburb { get; set; } = String.Empty;
 
     public string Address { get; set; } = null!;
     public int Price { get; set; }
@@ -23,7 +23,7 @@ public class PropertyDetailDto
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    public string Summary { get; set; } = null!;
-    public string ImageUrl { get; set; } = null!;
+    public string Summary { get; set; } = String.Empty;
+    public string ImageUrl { get; set; } = String.Empty;
 
 }
