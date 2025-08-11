@@ -217,9 +217,9 @@ public class DataSeeder
             .RuleFor(p => p.InternalArea, f => f.Random.Int(50, 400))
             .RuleFor(p => p.LandSize, f => f.Random.Int(100, 1000))
             .RuleFor(p => p.YearBuilt, f => f.Random.Int(1950, 2024))
-            .RuleFor(p => p.Features, f => string.Join(", ", f.PickRandom(features, f.Random.Int(1, 4))))
+            .RuleFor(p => p.Features, f => f.PickRandom(features, 3).ToArray())
             .RuleFor(p => p.Summary, (f, p) => $"Discover this stunning {p.Bedrooms}-bedroom {p.PropertyType.ToLower()} located in a vibrant suburb. " +
-                $"Featuring {p.Features.ToLower()}, this property offers comfort and convenience for modern living. " +
+                $"Featuring {p.Features}, this property offers comfort and convenience for modern living. " +
                 $"Built in {p.YearBuilt}, it boasts {p.Bathrooms} bathrooms and {p.CarSpaces} car spaces.")
             .RuleFor(p => p.ImageUrl, f => f.PickRandom(iamges));
         var properties = propertyFaker.Generate(500);
