@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using AutoMapper;
 using ISettlyService;
+using Microsoft.EntityFrameworkCore;
 using SettlyModels;
 using SettlyModels.Dtos;
 
@@ -18,33 +19,28 @@ namespace SettlyService
             _context = context;
             _mapper = mapper;
         }
-
-
         public async Task<PropertyDetailDto> GeneratePropertyDetailAsync(int propertyId)
         {
-            var property = await _context.Properties.FindAsync(propertyId);
-            if (property == null)
-                throw new Exception($"No property found for suburb id {propertyId}.");
 
-            var propertyObj = new PropertyDetailDto
-            {
-                Id = $"{property.Id}_{DateTime.UtcNow:yyyyMMdd}",
-                SuburbId = property.SuburbId,
-                Address = property.Address,
-                Price = property.Price,
-                Bathrooms = property.Bathrooms,
-                Bedrooms = property.Bathrooms,
-                CarSpaces = property.CarSpaces,
-                InternalArea = property.InternalArea,
-                LandSize = property.LandSize,
-                YearBuilt = property.YearBuilt,
-                Features = property.Features,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
+            var query = from p in _context.Properties
+                        join s in _context.Suburbs on p.SuburbId equals s.Id into ps
+                        from suburb in ps.DefaultIfEmpty()
+                        where p.Id == propertyId
+                        select new
+                        {
+                            Property = p,
+                            SuburbName = suburb != null ? suburb.Name : null
+                        };
 
-            };
+            var result = await query.SingleOrDefaultAsync();
 
-            return propertyObj;
+            if (result == null)
+                throw new KeyNotFoundException($"No property found for property id {propertyId}.");
+
+            var propertyDto = _mapper.Map<PropertyDetailDto>(result.Property);
+            propertyDto.Suburb = result.SuburbName;
+
+            return propertyDto;
         }
 
     }

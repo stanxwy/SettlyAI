@@ -14,8 +14,8 @@ public class Property
     public int LandSize { get; set; }
     public int YearBuilt { get; set; }
     public string Features { get; set; } = null!;
-    public string Summary { get; set; }
-    public string ImageUrl { get; set; }
+    public string Summary { get; set; } = string.Empty;
+    public string ImageUrl { get; set; } = string.Empty;
 
     public Suburb Suburb { get; set; } = null!;
     public ICollection<Favourite> Favourites { get; set; } = new List<Favourite>();
