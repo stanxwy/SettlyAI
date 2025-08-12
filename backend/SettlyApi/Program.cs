@@ -1,10 +1,9 @@
+
 using ISettlyService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SettlyModels;
 using SettlyService;
-using SettlyService.Mapping;
-
 
 namespace SettlyApi;
 
@@ -32,8 +31,10 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddScoped<ISuburbReportService, SuburbReportService>();
+        builder.Services.AddScoped<IPropertyDetailService, PropertyDetailService>();
         builder.Services.AddScoped<IFavouriteService, FavouriteService>();
         builder.Services.AddTransient<IPopulationSupplyService, PopulationSupplyService>();
+
 
         var app = builder.Build();
 
