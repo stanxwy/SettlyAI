@@ -7,24 +7,25 @@ namespace SettlyApi.Controllers
 
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/{id:int}")]
     public class SuburbController : ControllerBase
     {
-        private readonly ISuburbReportService _suburbReportService;
+        private readonly ISuburbService _suburbService;
 
-        public SuburbController(ISuburbReportService suburbReportService)
+        public SuburbController(ISuburbService suburbService)
         {
-            _suburbReportService = suburbReportService;
+            _suburbService = suburbService;
 
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<SuburbReportDto>> GetSuburbReport(int id)
+        [HttpGet]
+        public async Task<ActionResult<SuburbDto>> GetById(int id)
         {
-
-            var report = await _suburbReportService.GenerateSuburbReportAsync(id);
-            return Ok(report);
-
+            var suburb = await _suburbService.GetSuburbsByIdAsync(id);
+            return Ok(suburb);
         }
+
+
+
     }
 }

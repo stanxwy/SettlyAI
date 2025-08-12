@@ -8,17 +8,17 @@ using SettlyModels.Entities;
 namespace SettlyService
 {
 
-    public class SuburbReportService : ISuburbReportService
+    public class SuburbService : ISuburbService
     {
         private readonly SettlyDbContext _context;
         private readonly IMapper _mapper;
-        public SuburbReportService(SettlyDbContext context, IMapper mapper)
+        public SuburbService(SettlyDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<SuburbReportDto?> GenerateSuburbReportAsync(int suburbId)
+        public async Task<SuburbReportDto?> GetSuburbsByIdAsync(int suburbId)
         {
 
             var suburb = await _context.Suburbs.FindAsync(suburbId);
