@@ -26,37 +26,42 @@ namespace SettlyApi.Controllers
         }
 
         [HttpGet("income")]
-        public async Task<ActionResult<SuburbDto>> GetIncome(int id)
+        public async Task<ActionResult> GetIncome(int id)
         {
             return Ok();
         }
 
         [HttpGet("market")]
-        public async Task<ActionResult<SuburbDto>> GetMarket(int id)
+        public async Task<ActionResult> GetMarket(int id)
         {
             return Ok();
         }
 
         [HttpGet("demand-development")]
-        public async Task<ActionResult<SuburbDto>> GetDemandDev(int id)
+        public async Task<ActionResult> GetDemandDev(int id)
         {
             return Ok();
         }
 
         [HttpGet("lifestyle")]
-        public async Task<ActionResult<SuburbDto>> GetLifestyle(int id)
+        public async Task<ActionResult<LivabilityDto>> GetLifestyle(int id)
         {
-            return Ok();
+            var liveStyle = await _suburbService.GetLifestyleAsync(id);
+            return Ok(liveStyle);
+            //要不要检查不存在
+            //create 是不是要location
+            //要不要try catch
+            //返回notfound还是抛出错误
         }
 
         [HttpGet("safety")]
-        public async Task<ActionResult<SuburbDto>> GetSafety(int id)
+        public async Task<ActionResult> GetSafety(int id)
         {
             return Ok();
         }
 
         [HttpGet("aggregate")]
-        public async Task<ActionResult<SuburbDto>> GetAggregate(int id)
+        public async Task<ActionResult> GetAggregate(int id)
         {
             return Ok();
         }

@@ -3,7 +3,6 @@ using ISettlyService;
 using Microsoft.EntityFrameworkCore;
 using SettlyModels;
 using SettlyModels.Dtos;
-using SettlyModels.Entities;
 
 namespace SettlyService
 {
@@ -33,7 +32,7 @@ namespace SettlyService
             var riskDevelopment = await _context.RiskDevelopments.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
 
             var now = DateTime.UtcNow;
-            var report = new SuburbDto
+            var suburbData = new SuburbDto
             {
                 Id = $"{suburb.Id}_{now:yyyyMMdd}",
                 SuburbId = suburb.Id,
@@ -48,10 +47,9 @@ namespace SettlyService
                 Livability = _mapper.Map<LivabilityDto>(livability),
                 RiskDevelopment = _mapper.Map<RiskDevelopmentDto>(riskDevelopment),
                 SettlyAIScore = _mapper.Map<SettlyAIScoreDto>(settlyAIScore)
-
             };
 
-            return report;
+            return suburbData;
         }
 
         public async Task<IncomeEmploymentDto?> GetIncomeAsync(int id)
@@ -69,9 +67,21 @@ namespace SettlyService
             throw new NotImplementedException();
         }
 
-        public async Task<LivabilityDto?> GetLifestyleAsync(int id)
+        public Task<LivabilityDto?> GetLifestyleAsync(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<LivabilityDto?> GetLivabilityAsync(int id)
+        {
+
+            //iquerable
+            //emumalbe
+            //检不检查id
+            var lifeStyle = await _context.Livabilities.AsNoTracking().Where(l => l.SuburbId == id)
+                .FirstOrDefaultAsync();
+            return _mapper.Map<LivabilityDto>(lifeStyle);
+
         }
 
         public async Task<RiskDevelopmentDto?> GetSafetyAsync(int id)
