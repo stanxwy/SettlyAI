@@ -25,17 +25,17 @@ namespace SettlyService
             if (suburb == null)
                 throw new Exception($"No report found for suburb id {suburbId}.");
 
+            var incomeEmployment = await _context.IncomeEmployments.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
+            var housingMarket = await _context.HousingMarkets.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
+            var livability = await _context.Livabilities.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
+            var populationSupply = await _context.PopulationSupplies.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
+            var settlyAIScore = await _context.SettlyAIScores.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
+            var riskDevelopment = await _context.RiskDevelopments.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
 
-            var incomeEmployment = _context.IncomeEmployments.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
-            var housingMarket = _context.HousingMarkets.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
-            var livability = _context.Livabilities.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
-            var populationSupply = _context.PopulationSupplies.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
-            var settlyAIScore = _context.SettlyAIScores.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
-            var riskDevelopment = _context.RiskDevelopments.Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefault();
-
+            var now = DateTime.UtcNow;
             var report = new SuburbReportDto
             {
-                Id = $"{suburb.Id}_{DateTime.UtcNow:yyyyMMdd}",
+                Id = $"{suburb.Id}_{now:yyyyMMdd}",
                 SuburbId = suburb.Id,
                 State = suburb.State,
                 Postcode = suburb.Postcode,
@@ -50,7 +50,6 @@ namespace SettlyService
                 SettlyAIScore = _mapper.Map<SettlyAIScoreDto>(settlyAIScore)
 
             };
-
 
             return report;
         }
