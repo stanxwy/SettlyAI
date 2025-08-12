@@ -25,6 +25,41 @@ namespace SettlyApi.Controllers
             return Ok(suburb);
         }
 
+        [HttpGet("income")]
+        public async Task<ActionResult<SuburbDto>> GetIncome(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("market")]
+        public async Task<ActionResult<SuburbDto>> GetMarket(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("demand-development")]
+        public async Task<ActionResult<SuburbDto>> GetDemandDev(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("lifestyle")]
+        public async Task<ActionResult<SuburbDto>> GetLifestyle(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("safety")]
+        public async Task<ActionResult<SuburbDto>> GetSafety(int id)
+        {
+            return Ok();
+        }
+
+        [HttpGet("aggregate")]
+        public async Task<ActionResult<SuburbDto>> GetAggregate(int id)
+        {
+            return Ok();
+        }
 
 
     }

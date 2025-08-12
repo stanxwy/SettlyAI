@@ -18,7 +18,7 @@ namespace SettlyService
             _mapper = mapper;
         }
 
-        public async Task<SuburbReportDto?> GetSuburbsByIdAsync(int suburbId)
+        public async Task<SuburbDto?> GetSuburbsByIdAsync(int suburbId)
         {
 
             var suburb = await _context.Suburbs.FindAsync(suburbId);
@@ -33,7 +33,7 @@ namespace SettlyService
             var riskDevelopment = await _context.RiskDevelopments.AsNoTracking().Where(i => i.SuburbId == suburbId).OrderByDescending(i => i.Id).FirstOrDefaultAsync();
 
             var now = DateTime.UtcNow;
-            var report = new SuburbReportDto
+            var report = new SuburbDto
             {
                 Id = $"{suburb.Id}_{now:yyyyMMdd}",
                 SuburbId = suburb.Id,
@@ -52,6 +52,36 @@ namespace SettlyService
             };
 
             return report;
+        }
+
+        public async Task<IncomeEmploymentDto?> GetIncomeAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<HousingMarketDto?> GetMarketAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PopulationSupplyDto?> GetDemandDevAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<LivabilityDto?> GetLifestyleAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RiskDevelopmentDto?> GetSafetyAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<SuburbDto?> GetAggregateAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
     }
