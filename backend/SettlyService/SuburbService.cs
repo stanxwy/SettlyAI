@@ -67,19 +67,14 @@ namespace SettlyService
             throw new NotImplementedException();
         }
 
-        public Task<LivabilityDto?> GetLifestyleAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<LivabilityDto?> GetLivabilityAsync(int id)
         {
-
-            //iquerable
-            //emumalbe
-            //检不检查id
-            var lifeStyle = await _context.Livabilities.AsNoTracking().Where(l => l.SuburbId == id)
+            var lifeStyle = await _context.Livabilities.AsNoTracking().Where(l => l.SuburbId == id).OrderByDescending(l => l.SnapshotDate)
                 .FirstOrDefaultAsync();
+            if(lifeStyle == null)
+                //TODO:Change to global error handling middleware once it's done
+                throw new KeyNotFoundException($"Livability not found.");
             return _mapper.Map<LivabilityDto>(lifeStyle);
 
         }

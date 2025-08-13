@@ -43,15 +43,11 @@ namespace SettlyApi.Controllers
             return Ok();
         }
 
-        [HttpGet("lifestyle")]
-        public async Task<ActionResult<LivabilityDto>> GetLifestyle(int id)
+        [HttpGet("livability")]
+        public async Task<ActionResult<LivabilityDto>> GetLivability(int id)
         {
-            var liveStyle = await _suburbService.GetLifestyleAsync(id);
+            var liveStyle = await _suburbService.GetLivabilityAsync(id);
             return Ok(liveStyle);
-            //要不要检查不存在
-            //create 是不是要location
-            //要不要try catch
-            //返回notfound还是抛出错误
         }
 
         [HttpGet("safety")]
