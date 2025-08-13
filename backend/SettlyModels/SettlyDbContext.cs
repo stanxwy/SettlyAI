@@ -36,5 +36,12 @@ public class SettlyDbContext : DbContext
 
     public DbSet<Verification> Verifications { get; set; } = default!;
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Property>()
+            .Property(p => p.Features)
+            .HasColumnType("text[]");
+    }
 }
