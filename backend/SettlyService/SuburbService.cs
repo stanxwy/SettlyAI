@@ -84,10 +84,5 @@ namespace SettlyService
             throw new NotImplementedException();
         }
 
-        public async Task<SuburbDto?> GetAggregateAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

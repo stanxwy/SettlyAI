@@ -55,13 +55,5 @@ namespace SettlyApi.Controllers
         {
             return Ok();
         }
-
-        [HttpGet("aggregate")]
-        public async Task<ActionResult> GetAggregate(int id)
-        {
-            return Ok();
-        }
-
-
     }
 }
