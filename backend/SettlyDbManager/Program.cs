@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SettlyModels;
-using SettlyService.Mapping;
 
 namespace SettlyDbManager;
 
@@ -54,7 +52,6 @@ public class Program
                 .EnableDetailedErrors()
             );
 
-            services.AddAutoMapper(typeof(SuburbMappingProfile));
             services.AddScoped<DataSeeder>();
 
             var serviceProvider = services.BuildServiceProvider();
