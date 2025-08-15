@@ -3,6 +3,8 @@ import BannerWrapper from '@/pages/SuburbReportPage/components/Banner/BannerWrap
 import { Box, Button, styled, Typography } from '@mui/material';
 import MetricCardsSection from './components/MetricCardsSection';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { useQuery } from '@tanstack/react-query';
+import { getSuburbLivability } from '@/api/suburbApi';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   maxWidth: '1440px',
@@ -83,6 +85,12 @@ const SuburbReportPage = () => {
       subtitle: 'Superannuation',
     },
   ];
+
+  const query = useQuery({
+    queryKey: [''],
+    queryFn: () => getSuburbLivability(1),
+  });
+  console.log(query.data);
 
   return (
     <PageContainer>
