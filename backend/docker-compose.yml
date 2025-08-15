@@ -1,43 +1,68 @@
+version: '3.8'
+
 services:
   db:
-    image: postgres:16
-    container_name: dev-postgres
-    ports:
-      - "5432:5432"
+    image: postgres:15
+    container_name: settly_postgres
     environment:
+      POSTGRES_DB: settly
       POSTGRES_USER: your_username
       POSTGRES_PASSWORD: your_password
-      POSTGRES_DB: Settly
+    ports:
+      - "5432:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-    restart: unless-stopped
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - settly_network
 
-  db-migrate:
-    build:
-      context: ./SettlyModels
-      dockerfile: Dockerfile
+  migrator:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    container_name: settly_migrator
     depends_on:
       - db
-    command: ["dotnet", "ef", "database", "update"]
+    working_dir: /app/SettlyModels
+    volumes:
+      - .:/app
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development 
+    command: >
+      sh -c "
+      dotnet tool install --global dotnet-ef &&
+      export PATH=\"$PATH:/root/.dotnet/tools\" &&
+      dotnet ef database update --startup-project ../SettlyApi
+      "
+    networks:
+      - settly_network
 
-  db-seed:
+  settlyapi:
     build:
-      context: ./SettlyDbManager
-      dockerfile: Dockerfile
-    depends_on:
-      - db-migrate
-    command: ["dotnet", "run"]
-
-  api:
-    build:
-      context: ./SettlyApi
-      dockerfile: Dockerfile
-    depends_on:
-      - db-seed
+      context: .
+      dockerfile: SettlyApi/Dockerfile
     ports:
       - "5100:5100"
-    command: ["dotnet", "run", "--urls", "http://0.0.0.0:5100"]
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    networks:
+      - settly_network
+    depends_on:
+      - db
 
+  dbmanager:
+    build:
+      context: .
+      dockerfile: SettlyDbManager/Dockerfile
+    container_name: settly_dbmanager
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - db
+      - migrator
+    networks:
+      - settly_network
+    command: dotnet run -- --seed
 
 volumes:
-  postgres-data:
+  postgres_data:
+
+networks:
+  settly_network:

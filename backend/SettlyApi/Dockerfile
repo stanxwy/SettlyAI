@@ -1,7 +1,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY . .
-# 可选：恢复依赖（提高构建缓存命中率）
+WORKDIR /app
+
+COPY SettlyApi/ ./SettlyApi/
+COPY SettlyModels/ ./SettlyModels/
+COPY ISettlyService/ ./ISettlyService/
+COPY SettlyService/ ./SettlyService/
+
+WORKDIR /app/SettlyApi
 RUN dotnet restore
-# 运行应用（使用 docker-compose 的 command 覆盖此项）
-CMD ["dotnet", "run"]
+RUN dotnet publish -c Release -o /publish/api
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /publish/api .
+ENTRYPOINT ["dotnet", "SettlyApi.dll", "--urls", "http://0.0.0.0:5100"]
