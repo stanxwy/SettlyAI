@@ -21,13 +21,14 @@ const ContextContainer = styled(Box)(({ theme }) => ({
   maxWidth: '936px',
   display: 'flex',
   flexDirection: 'column',
-  alignItems:"center",
-  gap:theme.spacing(8),
-  width:"100%",
-  paddingTop:theme.spacing(8)
+  alignItems: 'center',
+  gap: theme.spacing(8),
+  width: '100%',
+  paddingTop: theme.spacing(8),
 }));
 
 const SuburbReportPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const TITLES = {
     incomeEmployment: 'Income & Employment',
     propertyMarketInsights: 'Property Market Insghts',
@@ -122,8 +123,8 @@ const SuburbReportPage = () => {
       {/* todo: replace with real card content */}
       <ContextContainer>
         <MetricCardsSection
-            title="Lifestyle Accessibility"
-            data={metricCardsData}
+          title="Lifestyle Accessibility"
+          data={metricCardsData}
         />
         {/* todo:  replace with real action buttons , feel free to modify*/}
         <ActionButtonWrapper>
@@ -131,7 +132,6 @@ const SuburbReportPage = () => {
           <Button>Export PDF</Button>
         </ActionButtonWrapper>
       </ContextContainer>
-
     </PageContainer>
   );
 };
