@@ -1,10 +1,6 @@
 import ActionButtonWrapper from '@/pages/SuburbReportPage/components/ActionButtonGroup/ActionButtonWrapper';
 import BannerWrapper from '@/pages/SuburbReportPage/components/Banner/BannerWrapper';
-import type { AppDispatch, RootState } from '@/store';
-import { fetchSuburbReport, setSuburbId } from '@/store/slices/suburbSlice';
 import { Box, Button, styled, Typography } from '@mui/material';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import MetricCardsSection from './components/MetricCardsSection';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
@@ -36,11 +32,7 @@ const SuburbReportPage = () => {
     lifeStyle: 'LifeStyle & Accessibility',
     safetyScore: 'Safety & Score',
   };
-  const dispatch = useDispatch<AppDispatch>();
-  const { suburbId, report, loading, error } = useSelector(
-    (state: RootState) => state.suburb
-  );
-  //todo: replace it with real data
+
   const metricCardsData = [
     {
       icon: <AccountBalanceIcon />,
@@ -92,32 +84,12 @@ const SuburbReportPage = () => {
     },
   ];
 
-  useEffect(() => {
-    let id = suburbId;
-
-    if (!id) {
-      const fromStorage = localStorage.getItem('suburbId');
-      if (fromStorage) {
-        id = parseInt(fromStorage);
-        dispatch(setSuburbId(id));
-      }
-    }
-
-    if (id) {
-      dispatch(fetchSuburbReport(id));
-    }
-  }, [suburbId, dispatch]);
-
-  if (loading) return <p>Loading report...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!report) return <p>No report found.</p>;
-
   return (
     <PageContainer>
       {/* todo: replace with real banner content */}
       <BannerWrapper>
         <Typography variant="h3" fontWeight={700}>
-          Welcome to {report.suburbName},{report.state},{report.postcode}
+          Welcome to xxx
         </Typography>
       </BannerWrapper>
       {/* todo: replace with real card content */}
