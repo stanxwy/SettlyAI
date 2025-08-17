@@ -80,6 +80,34 @@ services:
       retries: 3
       start_period: 40s
 
+  settly-frontend:
+    build:
+      context: ../../frontend
+      dockerfile: ../infrastructure/dev/Dockerfile.frontend
+    container_name: settly_frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - settly-api
+    networks:
+      - settly_network
+    volumes:
+      - ../../frontend:/app
+      - ./frontend-entrypoint.sh:/frontend-entrypoint.sh:ro
+      - /app/node_modules
+    working_dir: /app
+    command: ["bash", "/frontend-entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
 volumes:
   settly_data:
 
