@@ -3,6 +3,10 @@ import BannerWrapper from '@/pages/SuburbReportPage/components/Banner/BannerWrap
 import { Box, Button, styled, Typography } from '@mui/material';
 import MetricCardsSection from './components/MetricCardsSection';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { getDemandAndDev } from '@/api/suburbApi';
+import {mapDevCardData} from '@/pages/SuburbReportPage/components/MetricCardsSection/utils/MakeCards'
+import type { IMetricCardData } from './components/MetricCardsSection/MetricCardsSection';
+import { useEffect, useState } from 'react';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   maxWidth: '1440px',
@@ -32,7 +36,10 @@ const SuburbReportPage = () => {
     lifeStyle: 'LifeStyle & Accessibility',
     safetyScore: 'Safety & Score',
   };
-
+  const [demandAndDevCards, setDemandAndDevCards] = useState<IMetricCardData[]>([]);
+  // loading and errorMessage for page loading status
+  const [loading, setLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const metricCardsData = [
     {
       icon: <AccountBalanceIcon />,
@@ -84,6 +91,39 @@ const SuburbReportPage = () => {
     },
   ];
 
+  // use useEffect for APi fetching test, this part will be replaced by useQueries later 
+  useEffect(() => {
+    setLoading(true);
+    setErrorMessage(null);
+    const suburbId = localStorage.getItem('suburbId');
+    if (suburbId) {
+      const fetchDemandAndDevData = async() => {
+        try {
+          const data = await getDemandAndDev(parseInt(suburbId));
+          setDemandAndDevCards(mapDevCardData(data));
+        } catch (error) {
+          if (error instanceof Error) setErrorMessage(error.message);
+          else setErrorMessage(String(error));
+        } finally {
+          setLoading(false);
+        }
+      }
+      fetchDemandAndDevData();
+    } else {
+      setErrorMessage("Cannot find the surbub Id")
+      setLoading(false);
+    }
+  }, []);
+  // 1. Loading state
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  // 2. Error state
+  if (errorMessage) {
+    return <p style={{ color: "red" }}>Error: {errorMessage}</p>;
+  }
+
   return (
     <PageContainer>
       {/* todo: replace with real banner content */}
@@ -94,6 +134,10 @@ const SuburbReportPage = () => {
       </BannerWrapper>
       {/* todo: replace with real card content */}
       <ContextContainer>
+        <MetricCardsSection
+            title={TITLES.demandDevelopment}
+            data={demandAndDevCards}
+        />        
         <MetricCardsSection
           title="Lifestyle Accessibility"
           data={metricCardsData}
