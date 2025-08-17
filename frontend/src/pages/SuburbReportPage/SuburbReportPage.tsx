@@ -2,12 +2,10 @@ import ActionButtonWrapper from '@/pages/SuburbReportPage/components/ActionButto
 import BannerWrapper from '@/pages/SuburbReportPage/components/Banner/BannerWrapper';
 import { Box, Button, styled, Typography } from '@mui/material';
 import MetricCardsSection from './components/MetricCardsSection';
-import { useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { getSuburbLivability } from '@/api/suburbApi';
 import { Navigate, useParams } from 'react-router-dom';
 import { getDemandAndDev } from '@/api/suburbApi';
-import type { IMetricCardData } from './components/MetricCardsSection/MetricCardsSection';
-import { useEffect, useState } from 'react';
 import {
   mapDevCardData,
   mapLivability,
@@ -32,77 +30,52 @@ const ContentContainer = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(8),
 }));
 
-const SuburbReportPage = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const TITLES = {
-    incomeEmployment: 'Income & Employment',
-    propertyMarketInsights: 'Property Market Insghts',
-    demandDevelopment: 'Demand & Development',
-    lifeStyle: 'LifeStyle & Accessibility',
-    safetyScore: 'Safety & Score',
-  };
-  const [demandAndDevCards, setDemandAndDevCards] = useState<IMetricCardData[]>(
-    []
-  );
-  // loading and errorMessage for page loading status
-  const [loading, setLoading] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+const TITLES = {
+  incomeEmployment: 'Income & Employment',
+  propertyMarketInsights: 'Property Market Insights',
+  demandDevelopment: 'Demand & Development',
+  lifeStyle: 'LifeStyle & Accessibility',
+  safetyScore: 'Safety & Score',
+};
 
+const SuburbReportPage = () => {
   const { suburbId } = useParams<{ suburbId: string }>();
 
   if (!suburbId || Number.isNaN(suburbId)) {
     return <Navigate to="/" replace />;
   }
 
-  const query = useQuery({
-    queryKey: ['1'],
-    queryFn: () => getSuburbLivability(suburbId),
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ['demandAndDev', suburbId],
+        queryFn: () => getDemandAndDev(parseInt(suburbId)),
+      },
+      {
+        queryKey: ['livability', suburbId],
+        queryFn: () => getSuburbLivability(suburbId),
+      },
+    ],
   });
-  console.log(query.data);
 
-  // use useEffect for APi fetching test, this part will be replaced by useQueries later
-  useEffect(() => {
-    setLoading(true);
-    setErrorMessage(null);
-    const suburbId = localStorage.getItem('suburbId');
-    if (suburbId) {
-      const fetchDemandAndDevData = async () => {
-        try {
-          const data = await getDemandAndDev(parseInt(suburbId));
-          setDemandAndDevCards(mapDevCardData(data));
-        } catch (error) {
-          if (error instanceof Error) setErrorMessage(error.message);
-          else setErrorMessage(String(error));
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchDemandAndDevData();
-    } else {
-      setErrorMessage('Cannot find the surbub Id');
-      setLoading(false);
-    }
-  }, []);
-  // 1. Loading state
-  if (loading) {
-    return <p>Loading...</p>;
+  const allLoading = results.some(result => result.isLoading);
+  const anyError = results.find(result => result.error);
+
+  if (anyError) {
+    return (
+      /* todo: update error UI */
+      <div>
+        <div style={{ color: 'red' }}>Error: {anyError.error?.message}</div>
+        <div>❌</div>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
   }
 
-  // 2. Error state
-  if (errorMessage) {
-    return <p style={{ color: 'red' }}>Error: {errorMessage}</p>;
-  }
-
-  const data = {
-    transportScore: 8.5234,
-    supermarketQuantity: 12,
-    hospitalQuantity: 3,
-    primarySchoolRating: 7.2234,
-    secondarySchoolRating: 6.8234,
-    hospitalDensity: 1.5234,
+  const formattedData = {
+    demand: results[0].data ? mapDevCardData(results[0].data) : undefined,
+    livability: results[1].data ? mapLivability(results[1].data) : undefined,
   };
-
-  const formatedData = mapLivability(data);
 
   return (
     <PageContainer>
@@ -112,22 +85,31 @@ const SuburbReportPage = () => {
           Welcome to xxx
         </Typography>
       </BannerWrapper>
-      {/* todo: replace with real card content */}
-      <ContentContainer>
-        <MetricCardsSection
-          title={TITLES.demandDevelopment}
-          data={demandAndDevCards}
-        />
-        <MetricCardsSection
-          title="Lifestyle Accessibility"
-          data={formatedData}
-        />
-        {/* todo:  replace with real action buttons , feel free to modify*/}
-        <ActionButtonWrapper>
-          <Button>save this suburb</Button>
-          <Button>Export PDF</Button>
-        </ActionButtonWrapper>
-      </ContentContainer>
+      {/* todo: update loading UI */}
+      {allLoading ? (
+        <div style={{ textAlign: 'center', padding: '50px' }}>
+          <div>Loading all data...</div>
+          <div style={{ fontSize: '48px' }}>⏳</div>
+        </div>
+      ) : (
+        <ContentContainer>
+          <MetricCardsSection
+            title={TITLES.demandDevelopment}
+            data={formattedData.demand}
+          />
+
+          <MetricCardsSection
+            title={TITLES.lifeStyle}
+            data={formattedData.livability}
+          />
+
+          {/* todo:  replace with real action buttons , feel free to modify*/}
+          <ActionButtonWrapper>
+            <Button>save this suburb</Button>
+            <Button>Export PDF</Button>
+          </ActionButtonWrapper>
+        </ContentContainer>
+      )}
     </PageContainer>
   );
 };
