@@ -1,15 +1,12 @@
 import ActionButtonWrapper from '@/pages/SuburbReportPage/components/ActionButtonGroup/ActionButtonWrapper';
 import BannerWrapper from '@/pages/SuburbReportPage/components/Banner/BannerWrapper';
-import type { AppDispatch, RootState } from '@/store';
-import { fetchSuburbReport, setSuburbId } from '@/store/slices/suburbSlice';
 import { Box, Button, styled, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import MetricCardsSection from './components/MetricCardsSection';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { getDemandAndDev } from '@/api/suburbApi';
 import {mapDevCardData} from '@/pages/SuburbReportPage/components/MetricCardsSection/utils/MakeCards'
 import type { IMetricCardData } from './components/MetricCardsSection/MetricCardsSection';
+import { useEffect, useState } from 'react';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   maxWidth: '1440px',
@@ -24,13 +21,14 @@ const ContextContainer = styled(Box)(({ theme }) => ({
   maxWidth: '936px',
   display: 'flex',
   flexDirection: 'column',
-  alignItems:"center",
-  gap:theme.spacing(8),
-  width:"100%",
-  paddingTop:theme.spacing(8)
+  alignItems: 'center',
+  gap: theme.spacing(8),
+  width: '100%',
+  paddingTop: theme.spacing(8),
 }));
 
 const SuburbReportPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const TITLES = {
     incomeEmployment: 'Income & Employment',
     propertyMarketInsights: 'Property Market Insghts',
@@ -38,14 +36,10 @@ const SuburbReportPage = () => {
     lifeStyle: 'LifeStyle & Accessibility',
     safetyScore: 'Safety & Score',
   };
-  const dispatch = useDispatch<AppDispatch>();
-  const { suburbId, report, loading, error } = useSelector(
-    (state: RootState) => state.suburb
-  );
-
   const [demandAndDevCards, setDemandAndDevCards] = useState<IMetricCardData[]>([]);
-
-  //todo: replace it with real data
+  // loading and errorMessage for page loading status
+  const [loading, setLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const metricCardsData = [
     {
       icon: <AccountBalanceIcon />,
@@ -97,40 +91,45 @@ const SuburbReportPage = () => {
     },
   ];
 
+  // use useEffect for APi fetching test, this part will be replaced by useQueries later 
   useEffect(() => {
-    let id = suburbId;
-
-    if (!id) {
-      const fromStorage = localStorage.getItem('suburbId');
-      if (fromStorage) {
-        id = parseInt(fromStorage);
-        dispatch(setSuburbId(id));
-      }
-    }
-
-    if (id) {
-      dispatch(fetchSuburbReport(id));
-    }
-    if (id) {
+    setLoading(true);
+    setErrorMessage(null);
+    const suburbId = localStorage.getItem('suburbId');
+    if (suburbId) {
       const fetchDemandAndDevData = async() => {
-        const data = await getDemandAndDev(id);
-        setDemandAndDevCards(mapDevCardData(data));
+        try {
+          const data = await getDemandAndDev(parseInt(suburbId));
+          setDemandAndDevCards(mapDevCardData(data));
+        } catch (error) {
+          if (error instanceof Error) setErrorMessage(error.message);
+          else setErrorMessage(String(error));
+        } finally {
+          setLoading(false);
+        }
       }
       fetchDemandAndDevData();
+    } else {
+      setErrorMessage("Cannot find the surbub Id")
+      setLoading(false);
     }
+  }, []);
+  // 1. Loading state
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  }, [suburbId, dispatch]);
-
-  if (loading) return <p>Loading report...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!report) return <p>No report found.</p>;
+  // 2. Error state
+  if (errorMessage) {
+    return <p style={{ color: "red" }}>Error: {errorMessage}</p>;
+  }
 
   return (
     <PageContainer>
       {/* todo: replace with real banner content */}
       <BannerWrapper>
         <Typography variant="h3" fontWeight={700}>
-          Welcome to {report.suburbName},{report.state},{report.postcode}
+          Welcome to xxx
         </Typography>
       </BannerWrapper>
       {/* todo: replace with real card content */}
@@ -140,8 +139,8 @@ const SuburbReportPage = () => {
             data={demandAndDevCards}
         />        
         <MetricCardsSection
-            title="Lifestyle Accessibility"
-            data={metricCardsData}
+          title="Lifestyle Accessibility"
+          data={metricCardsData}
         />
         {/* todo:  replace with real action buttons , feel free to modify*/}
         <ActionButtonWrapper>
@@ -149,7 +148,6 @@ const SuburbReportPage = () => {
           <Button>Export PDF</Button>
         </ActionButtonWrapper>
       </ContextContainer>
-
     </PageContainer>
   );
 };
