@@ -5,6 +5,7 @@ import MetricCardsSection from './components/MetricCardsSection';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useQuery } from '@tanstack/react-query';
 import { getSuburbLivability } from '@/api/suburbApi';
+import { Navigate, useParams } from 'react-router-dom';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   maxWidth: '1440px',
@@ -15,7 +16,7 @@ const PageContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(8),
 }));
 
-const ContextContainer = styled(Box)(({ theme }) => ({
+const ContentContainer = styled(Box)(({ theme }) => ({
   maxWidth: '936px',
   display: 'flex',
   flexDirection: 'column',
@@ -86,9 +87,15 @@ const SuburbReportPage = () => {
     },
   ];
 
+  const { suburbId } = useParams<{ suburbId: string }>();
+
+  if (!suburbId || Number.isNaN(suburbId)) {
+    return <Navigate to="/" replace />;
+  }
+
   const query = useQuery({
     queryKey: [''],
-    queryFn: () => getSuburbLivability(1),
+    queryFn: () => getSuburbLivability(suburbId),
   });
   console.log(query.data);
 
@@ -101,7 +108,7 @@ const SuburbReportPage = () => {
         </Typography>
       </BannerWrapper>
       {/* todo: replace with real card content */}
-      <ContextContainer>
+      <ContentContainer>
         <MetricCardsSection
           title="Lifestyle Accessibility"
           data={metricCardsData}
@@ -111,7 +118,7 @@ const SuburbReportPage = () => {
           <Button>save this suburb</Button>
           <Button>Export PDF</Button>
         </ActionButtonWrapper>
-      </ContextContainer>
+      </ContentContainer>
     </PageContainer>
   );
 };
