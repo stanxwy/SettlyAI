@@ -2,16 +2,16 @@ import ActionButtonWrapper from '@/pages/SuburbReportPage/components/ActionButto
 import BannerWrapper from '@/pages/SuburbReportPage/components/Banner/BannerWrapper';
 import { Box, Button, styled, Typography } from '@mui/material';
 import MetricCardsSection from './components/MetricCardsSection';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-
 import { useQuery } from '@tanstack/react-query';
 import { getSuburbLivability } from '@/api/suburbApi';
 import { Navigate, useParams } from 'react-router-dom';
-
 import { getDemandAndDev } from '@/api/suburbApi';
-import { mapDevCardData } from '@/pages/SuburbReportPage/components/MetricCardsSection/utils/MakeCards';
 import type { IMetricCardData } from './components/MetricCardsSection/MetricCardsSection';
 import { useEffect, useState } from 'react';
+import {
+  mapDevCardData,
+  mapLivability,
+} from './components/MetricCardsSection/utils/dataMapper';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   maxWidth: '1440px',
@@ -47,56 +47,6 @@ const SuburbReportPage = () => {
   // loading and errorMessage for page loading status
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const metricCardsData = [
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Financial Health',
-      value: '$12,500',
-      subtitle: 'Total Savings',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Monthly Income',
-      value: '$3,200',
-      subtitle: 'After Tax',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Credit Score',
-      value: '752',
-      subtitle: 'Excellent',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Loan Balance',
-      value: '$8,900',
-      subtitle: 'Remaining',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Investments',
-      value: '$15,000',
-      subtitle: 'Stocks & Funds',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Monthly Expenses',
-      value: '$2,100',
-      subtitle: 'Utilities & Rent',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Net Worth',
-      value: '$28,400',
-      subtitle: 'Assets - Liabilities',
-    },
-    {
-      icon: <AccountBalanceIcon />,
-      title: 'Retirement Fund',
-      value: '$7,800',
-      subtitle: 'Superannuation',
-    },
-  ];
 
   const { suburbId } = useParams<{ suburbId: string }>();
 
@@ -105,7 +55,7 @@ const SuburbReportPage = () => {
   }
 
   const query = useQuery({
-    queryKey: [''],
+    queryKey: ['1'],
     queryFn: () => getSuburbLivability(suburbId),
   });
   console.log(query.data);
@@ -143,6 +93,17 @@ const SuburbReportPage = () => {
     return <p style={{ color: 'red' }}>Error: {errorMessage}</p>;
   }
 
+  const data = {
+    transportScore: 8.5234,
+    supermarketQuantity: 12,
+    hospitalQuantity: 3,
+    primarySchoolRating: 7.2234,
+    secondarySchoolRating: 6.8234,
+    hospitalDensity: 1.5234,
+  };
+
+  const formatedData = mapLivability(data);
+
   return (
     <PageContainer>
       {/* todo: replace with real banner content */}
@@ -159,7 +120,7 @@ const SuburbReportPage = () => {
         />
         <MetricCardsSection
           title="Lifestyle Accessibility"
-          data={metricCardsData}
+          data={formatedData}
         />
         {/* todo:  replace with real action buttons , feel free to modify*/}
         <ActionButtonWrapper>

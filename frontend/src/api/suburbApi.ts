@@ -10,7 +10,9 @@ export const getSuburbReport = async (
   return response.data;
 };
 
-export const getSuburbLivability = async (suburbId: string) => {
+export const getSuburbLivability = async (
+  suburbId: string
+): Promise<ILivability> => {
   const response = await httpClient.get<ILivability>(
     `/suburb/${suburbId}/livability`
   );
