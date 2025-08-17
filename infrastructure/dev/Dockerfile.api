@@ -1,0 +1,29 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+# Install curl for health checks and PostgreSQL client
+RUN apt-get update && apt-get install -y curl postgresql-client && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy solution and project files first for better caching
+COPY backend.sln ./
+COPY SettlyApi/SettlyApi.csproj ./SettlyApi/
+COPY SettlyModels/SettlyModels.csproj ./SettlyModels/
+COPY SettlyService/SettlyService.csproj ./SettlyService/
+COPY ISettlyService/ISettlyService.csproj ./ISettlyService/
+COPY SettlyDbManager/SettlyDbManager.csproj ./SettlyDbManager/
+COPY SettlyApiTests/SettlyApiTests.csproj ./SettlyApiTests/
+
+# Restore packages
+RUN dotnet restore backend.sln
+
+# Copy the rest of the source code
+COPY . .
+
+# Build the application
+RUN dotnet build SettlyApi/SettlyApi.csproj -c Release
+
+EXPOSE 8080
+
+# Default command - will be overridden by docker-compose
+CMD ["dotnet", "run", "--project", "SettlyApi", "--configuration", "Release", "--urls", "http://0.0.0.0:8080"]

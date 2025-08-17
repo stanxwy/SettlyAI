@@ -25,7 +25,7 @@ services:
   settly-db-migration:
     build:
       context: ../../backend
-      dockerfile: ../infrastructure/dev/Dockerfile.db
+      dockerfile: ../infrastructure/dev/Dockerfile.migration
     container_name: settly_db_migration
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -44,6 +44,41 @@ services:
       - ./entrypoint.sh:/entrypoint.sh:ro
     working_dir: /app
     command: ["bash", "/entrypoint.sh"]
+
+  settly-api:
+    build:
+      context: ../../backend
+      dockerfile: ../infrastructure/dev/Dockerfile.api
+    container_name: settly_api
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      settly-db-migration:
+        condition: service_completed_successfully
+    networks:
+      - settly_network
+    volumes:
+      - ../../backend:/app
+      - ./api-entrypoint.sh:/api-entrypoint.sh:ro
+    working_dir: /app
+    command: ["bash", "/api-entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 volumes:
   settly_data:
