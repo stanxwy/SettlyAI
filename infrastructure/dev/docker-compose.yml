@@ -41,9 +41,9 @@ services:
       - settly_network
     volumes:
       - ../../backend:/app
-      - ./entrypoint.sh:/entrypoint.sh:ro
+      - ./migration-entrypoint.sh:/migration-entrypoint.sh:ro
     working_dir: /app
-    command: ["bash", "/entrypoint.sh"]
+    command: ["bash", "/migration-entrypoint.sh"]
 
   settly-api:
     build:
