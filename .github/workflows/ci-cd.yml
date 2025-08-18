@@ -32,13 +32,19 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    # ✅ Normalize env vars to lowercase once
+    - name: Normalize registry/repo names
+      run: |
+        echo "REGISTRY_LC=${REGISTRY,,}" >> $GITHUB_ENV
+        echo "IMAGE_NAME_LC=${IMAGE_NAME,,}" >> $GITHUB_ENV
+
     - name: Build and push API
       uses: docker/build-push-action@v5
       with:
         context: ./backend
         file: ./infrastructure/dev/Dockerfile.api
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:latest
+        tags: ${{ env.REGISTRY_LC }}/${{ env.IMAGE_NAME_LC }}/api:latest
 
     - name: Build and push Frontend  
       uses: docker/build-push-action@v5
@@ -46,9 +52,9 @@ jobs:
         context: ./frontend
         file: ./infrastructure/dev/Dockerfile.frontend
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:latest
+        tags: ${{ env.REGISTRY_LC }}/${{ env.IMAGE_NAME_LC }}/frontend:latest
         build-args: |
-          VITE_API_URL=${{ vars.VITE_API_URL }}  # ← YOU need to set this
+          VITE_API_URL=${{ vars.VITE_API_URL }}
 
   deploy:
     needs: build-and-push
