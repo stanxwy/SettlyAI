@@ -10,6 +10,7 @@ import {
   mapDevCardData,
   mapLivability,
 } from './components/MetricCardsSection/utils/dataMapper';
+import GlobalButton from '@/components/Button/GlobalButton';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   maxWidth: '1440px',
