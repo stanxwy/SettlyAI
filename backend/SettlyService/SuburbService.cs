@@ -54,7 +54,14 @@ namespace SettlyService
 
         public async Task<IncomeEmploymentDto?> GetIncomeAsync(int id)
         {
-            throw new NotImplementedException();
+            var incomeEmploymentData = await _context.IncomeEmployments
+                .Where(i => i.SuburbId == id)
+                .OrderByDescending(i => i.SnapshotDate)
+                .FirstOrDefaultAsync();
+
+            if (incomeEmploymentData == null)
+                throw new Exception("No income employment data found.");
+            return _mapper.Map<IncomeEmploymentDto>(incomeEmploymentData);
         }
 
         public async Task<HousingMarketDto?> GetHousingMarketAsync(int id)
@@ -84,7 +91,6 @@ namespace SettlyService
                 //TODO:Change to global error handling middleware once it's done
                 throw new KeyNotFoundException($"Livability not found.");
             return _mapper.Map<LivabilityDto>(lifeStyle);
-
         }
 
         public async Task<RiskDevelopmentDto?> GetSafetyAsync(int id)
